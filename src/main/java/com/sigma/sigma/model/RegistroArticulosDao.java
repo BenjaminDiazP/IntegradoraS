@@ -18,7 +18,7 @@ public class RegistroArticulosDao implements DaoRepository {
 
         return listaArticulos;
     }
-
+    //JosleBEEEEEEEEE
     public interface ArticuloDAO {
         List<Articulo> getAllArticulos() throws Exception;
     }

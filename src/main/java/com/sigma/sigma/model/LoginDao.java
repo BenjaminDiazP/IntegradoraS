@@ -15,7 +15,9 @@ public class    LoginDao implements DaoRepository{
     public List findAll() {
         return null;
     }
+// Juan Pedroza
 
+    //JosleBEEEEEEEEE
     @Override
     public Object findOne(int id , String rol) { return null;} // modifique esto agre el rol aqui y en el DaoRepository
     public Usuario findOne(String correo, String contra) {
