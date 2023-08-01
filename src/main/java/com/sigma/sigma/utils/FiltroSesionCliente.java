@@ -34,7 +34,7 @@ public class FiltroSesionCliente implements Filter {
 
             if (session.getAttribute("tipoSesion") != null) {
                 System.out.println(session.getAttribute("tipoSesion"));
-                String op = session.getAttribute("tipoSesion").toString();
+                String op = session.getAttribute("tipoSesion").toString(); // is true Nombre
                 isAdmin = session.getAttribute("tipoSesion").equals(op);
             }
 
