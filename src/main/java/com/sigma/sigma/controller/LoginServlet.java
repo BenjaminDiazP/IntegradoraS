@@ -23,6 +23,7 @@ public class LoginServlet extends HttpServlet {
             String contrasenia = req.getParameter("contra");
             LoginDao dao = new LoginDao();
             Usuario usr = (Usuario) dao.findOne(correo, contrasenia);
+            req.getSession().setAttribute("tipoSesion", usr.getRol()); //agregue esto para el filtro con esto logra jalar el rol
             System.out.println(correo);
             System.out.println(contrasenia);
                 if (usr != null) {
@@ -52,6 +53,7 @@ public class LoginServlet extends HttpServlet {
                             resp.sendRedirect("Caja.jsp");
                             break;
                         default:
+                            req.getSession().setAttribute("tipoSesion", "Cliente"); // agrego el atributo cliente en lugar del rol por que en la tabla cliente no tiene tipo de rol
                             resp.sendRedirect("Cliente.jsp");
                             break;
                     }
