@@ -8,6 +8,7 @@
     <title>Registrar Empleado</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/cssRegistroEU/cssRegistroEU.css" type="text/css">
 </head>
@@ -160,8 +161,30 @@
         </div>
     </div>
 </div>
+<c:if test="${not empty mensajeError}">
+    <script>
+        swal({
+            title: "Error de registro!",
+            text: "Hubo un error al insertar el cliente en la base de datos.",
+            icon: "error",
 
+        });
+    </script>
+
+</c:if>
+<c:if test="${not empty mensajeExito}">
+    <script>
+        swal({
+            title: "Registro Existoso!",
+            text: "Se ha registrado un Empleado correctamente.",
+            icon: "success",
+
+        });
+    </script>
+
+</c:if>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="assets/js/jsRegistrarEU/scriptMenu.js"></script>
 </body>

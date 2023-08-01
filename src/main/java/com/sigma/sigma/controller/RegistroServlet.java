@@ -41,36 +41,78 @@ public class RegistroServlet extends HttpServlet {
         String codigo = generarCadenaAleatoria(longitudCodigo, caracteres);
         String accion = req.getParameter("Registrar"); // esto lo cambie estaba como
 
-        System.out.println(contrasenia);
+
         if (accion.equals("Agregar usuario")) {
 
-            dao.insertCliente(new Usuario(nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
-            Usuario usr = (Usuario) dao.findOne(correo, contrasenia);
-            System.out.println(usr.getContrasenia());
-            Send correoUtil = new Send();
-            try {
-                correoUtil.enviarCorreo("carlosbenjamin340@gmail.com", "tonto", "assets/img/");
-                // Redirecciona a una página de éxito o muestra un mensaje
-                resp.sendRedirect("index.jsp");
-            } catch (MessagingException e) {
-                e.printStackTrace();
-                // Redirecciona a una página de error o muestra un mensaje
-                resp.sendRedirect("index.jsp");
+            boolean envio = dao.insertCliente(new Usuario(nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
+
+            if (envio != false){
+                SendEmail mail = new SendEmail();
+                try{
+                    mail.sendEmail(
+                            correo,
+                            "Prueba de envio",
+                            "<h1>Hola como estas </h1>",
+                            new File(
+                                    req.getSession().
+                                            getServletContext().
+                                            getResource("/assets/img/logo.png").
+                                            toURI()));
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }else{
+
             }
-            resp.sendRedirect("index.jsp");
+
+
         }else if (accion.equals("Agregar Empleado")){
 
-            dao.insertEmpleado(new Usuario(rol,nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
-            Usuario usr = (Usuario) dao.findOneEmpleado(correo, contrasenia);
+          boolean envio1=  dao.insertEmpleado(new Usuario(rol,nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
+            if (envio1 != false){
+                SendEmail mail = new SendEmail();
+                try{
+                    System.out.println(contrasenia);
+                    mail.sendEmail(
+                            correo,
+                            "Bienvenido a SIGMA" ,
+                            "<p >Gracias por registrarte en nuestro sistema " +"<strong>"+nombre+"</strong>"+"<br>"+" Ahora podras iniciar sesión en nuestro sistema con la siguiente " +
+                                    "contraseña : " + "<strong>"+contrasenia+"</strong>"  + "</p>",
+                            new File(
+                                    req.getSession().
+                                            getServletContext().
+                                            getResource("/assets/img/imagesPaginaPrincipal/logo.png").
+                                            toURI()));
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                req.getSession().setAttribute("mensajeExito", "Registro Exitoso");
+                req.getSession().setAttribute("mensajeError", null);
+                resp.sendRedirect("RegistrarEmpleado.jsp");
+                return;
+            }else{
+
+                req.getSession().setAttribute("mensajeError", "Hubo un error al insertar el cliente en la base de datos.");
+                req.getSession().setAttribute("mensajeExito", null);
+                resp.sendRedirect("RegistrarEmpleado.jsp");
+                return;
+            }
+
 
         }
-        resp.sendRedirect("index.jsp");
 
     }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    resp.sendRedirect("Gerente.jsp");
+
+
+
 
     }
     public static String generarCadenaAleatoria(int longitud, String caracteres) {

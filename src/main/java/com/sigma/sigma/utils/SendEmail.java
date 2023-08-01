@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class SendEmail {
-    final private String de = "sigmautez@gmail.com";
-    final private String pass = "bfezkvhciuiknxrj";
+    final private String de = "utezsigma@gmail.com";
+    final private String pass = "nkxllqfpgvabfspz";
 
     public SendEmail(){
     }
