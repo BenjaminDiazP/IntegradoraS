@@ -1,5 +1,4 @@
 package com.sigma.sigma.utils;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -29,23 +28,22 @@ public class FiltroSesionRecepcionista implements Filter {
         // Get the HttpSession from the request
         HttpSession session = httpRequest.getSession(false);
 
-        // Check if the user is an admin(assuming isAdmin is a boolean session attribute)
-        boolean isAdmin = false;
-        if(session != null){
-
+        // Check if the user is a recepcionista (assuming isRecepcionista is a boolean session attribute)
+        boolean isRecepcionista = false;
+        if (session != null) {
             if (session.getAttribute("tipoSesion") != null) {
-
-                System.out.println(session.getAttribute("tipoSesion"));
-                isAdmin = session.getAttribute("tipoSesion").equals("Recepcionista");
+                isRecepcionista = session.getAttribute("tipoSesion").equals("Recepcionista");
             }
-
         }
 
-        if (isAdmin) {
-            // If the user is an admin, allow access to the Servlet
+        // Check if the requested page is allowed for shared access
+        boolean paginaPermitida = "/RegistrarUsuario.jsp".equals(httpRequest.getServletPath());
+
+        if (isRecepcionista || paginaPermitida) {
+            // If the user is a recepcionista or the page is allowed for shared access, allow access to the Servlet
             chain.doFilter(request, response);
         } else {
-            // If the user is not an admin, redirect them to a restricted access page
+            // If the user is not a recepcionista and the page is not allowed for shared access, redirect them to a restricted access page
             httpResponse.sendRedirect("FailedAccess.jsp");
         }
     }

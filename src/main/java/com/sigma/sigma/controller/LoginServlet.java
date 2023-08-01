@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
                             resp.sendRedirect("Caja.jsp");
                             break;
                         default:
-
+                            req.getSession().setAttribute("tipoSesion", "Cliente"); // agrego el atributo cliente en lugar del rol por que en la tabla cliente no tiene tipo de rol
                             resp.sendRedirect("Cliente.jsp");
                             break;
                     }

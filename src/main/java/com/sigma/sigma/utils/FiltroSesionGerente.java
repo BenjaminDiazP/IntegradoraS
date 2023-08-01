@@ -1,8 +1,4 @@
 package com.sigma.sigma.utils;
-
-import com.sigma.sigma.model.LoginDao;
-import com.sigma.sigma.model.Usuario;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -35,23 +31,27 @@ public class FiltroSesionGerente implements Filter {
         // Get the HttpSession from the request
         HttpSession session = httpRequest.getSession(false);
 
-        // Check if the user is an admin(assuming isAdmin is a boolean session attribute)
+        // Check if the user is an admin (assuming isAdmin is a boolean session attribute)
         boolean isAdmin = false;
-        if(session != null){
-
+        if (session != null) {
             if (session.getAttribute("tipoSesion") != null) {
-
-                System.out.println(session.getAttribute("tipoSesion"));
                 isAdmin = session.getAttribute("tipoSesion").equals("Gerente");
             }
-
         }
 
-        if (isAdmin) {
-            // If the user is an admin, allow access to the Servlet
+        // Check if the requested page is allowed for shared access
+        boolean paginaPermitida = "/RegistrarUsuario.jsp".equals(httpRequest.getServletPath());
+
+        //esto es por si nececito agregar mas paginas que se comparten los usuarios
+
+        //boolean paginaPermitida = "/RegistrarUsuario.jsp".equals(httpRequest.getServletPath())
+                //|| "/RegistrarAutomovil.jsp".equals(httpRequest.getServletPath());
+
+        if (isAdmin || paginaPermitida) {
+            // If the user is an admin or the page is allowed for shared access, allow access to the Servlet
             chain.doFilter(request, response);
         } else {
-            // If the user is not an admin, redirect them to a restricted access page
+            // If the user is not an admin and the page is not allowed for shared access, redirect them to a restricted access page
             httpResponse.sendRedirect("FailedAccess.jsp");
         }
     }
