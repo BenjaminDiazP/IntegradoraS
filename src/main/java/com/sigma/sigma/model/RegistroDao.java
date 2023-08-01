@@ -81,7 +81,7 @@ public class RegistroDao implements DaoRepository {
         Connection con = connection.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "insert into Cliente(Nombre, Apellido1, Apellido2,Rfc, Curp, Direccion, Sexo, NoTelefono, Correo,FechaNac, Codigo,Contrasenia)"+
+                    "insert into Cliente(Nombre, Apellido1, Apellido2,Rfc, Curp, Direccion, Sexo, NoTelefono, Correo,FechaNac,Contrasenia, Codoigo)"+
                             "values(?,?,?,?,?,?,?,?,?,?,sha2(?,224),sha2(?,224))"
             );
             stmt.setString(1,usr.getNombre());
@@ -94,8 +94,8 @@ public class RegistroDao implements DaoRepository {
             stmt.setString(8,usr.getNoTelefono());
             stmt.setString(9,usr.getCorreo());
             stmt.setString(10,usr.getFechaNac());
-            stmt.setString(11,usr.getCodigo());
-            stmt.setString(12,usr.getContrasenia());
+            stmt.setString(12,usr.getCodigo());
+            stmt.setString(11,usr.getContrasenia());
 
 
 
@@ -130,14 +130,18 @@ public class RegistroDao implements DaoRepository {
             stmt.setString(12,usr.getContrasenia());
             stmt.setString(13,usr.getCodigo());
 
-
-
-
-            if(stmt.executeUpdate() > 0){
+            if (stmt.executeUpdate() > 0) {
                 return true;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Imprime el error en la consola para que puedas verlo
+        } finally {
+            // Cerrar la conexión en el bloque finally
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }

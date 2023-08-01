@@ -1,41 +1,35 @@
 package com.sigma.sigma.utils;
 
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.*;
 import java.util.Properties;
 
 public class Send {
-    private final String correoRemitente = "sigmautez@gmail.co";
-    private final String contraseñaRemitente = "bfezkvhciuiknxrj";
+    private static final String FROM_EMAIL = "utezsigma@gmail.com";
+    private static final String PASSWORD = "nkxllqfpgvabfspz";
 
-    public void enviarCorreo(String destinatario, String asunto, String contenido) throws MessagingException {
-        try {
-            Properties props = new Properties();
-            props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", "smtp.gmail.com");
-            props.put("mail.smtp.port", "587");
+    public static void sendEmail(String toEmail, String subject, String message) throws MessagingException {
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
-            // Crea una sesión de correo con autenticación
-            Session session = Session.getInstance(props, new Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(correoRemitente, contraseñaRemitente);
-                }
-            });
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(FROM_EMAIL, PASSWORD);
+            }
+        });
 
-            // Crea el mensaje
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(correoRemitente));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-            message.setSubject(asunto);
-            message.setText(contenido);
+        Message msg = new MimeMessage(session);
 
-            // Envía el mensaje
-            Transport.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        // Establecemos el nombre y la dirección de correo electrónico del remitente
+        String from = "Tu Nombre <" + FROM_EMAIL + ">";
+        msg.setFrom(new InternetAddress(from));
+
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+        msg.setSubject(subject);
+        msg.setContent(message, "text/plain"); // Agregamos el tipo de contenido como texto simple
+        Transport.send(msg);
     }
 }
