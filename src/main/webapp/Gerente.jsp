@@ -30,10 +30,10 @@
                                 <p><strong>Nombre: ${ usuario}</strong> <span id="nombreEmpleado"></span></p>
                             </div>
                             <div class="info-row d-flex">
-                                <p><strong>Apellido Materno: ${apellido1}</strong> <span id="apellidoEmpleado"></span></p>
+                                <p><strong>Apellido Paterno: ${apellido1}</strong> <span id="apellidoEmpleado"></span></p>
                             </div>
                             <div class="info-row d-flex">
-                                <p><strong>Apellido Paterno: ${apellido2}</strong> <span id="rolEmpleado"></span></p>
+                                <p><strong>Apellido Materno: ${apellido2}</strong> <span id="rolEmpleado"></span></p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -155,7 +155,7 @@
                             <div class="card">
                                 <a href="#" class="funcion">
                                     <div class="card-body">
-                                        <h4 class="card-title">Prodcutos</h4>
+                                        <h4 class="card-title">Productos</h4>
 
                                     </div>
                                 </a>

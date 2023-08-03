@@ -8,7 +8,7 @@
     <title>Registrar Articulos</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/cssRegistroArticu/styleArticu.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/cssRegistroEU/cssRegistroEU.css" type="text/css">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
         <div class="card-header d-flex justify-content-between">
             <h2>Registro de Articulos</h2>
             <nav>
-                <a href="" class="nav_link">Regresar</a>
+                <a href="Gerente.jsp" class="nav_link">Regresar</a>
             </nav>
         </div>
         <div class="card-body">
@@ -70,26 +70,25 @@
         <div class="card-body">
             <div class="row">
                 <div class="catalog-container">
-                    <form action="" method="get">
-                        <label for="search">Articulos:</label>
-                        <input type="search" id="search" name="q" />
-                        <button class="btn btn-primary"  type="submit">Buscar</button>
+                    <form id="searchForm" action="" method="get">
+                        <div class="search-container">
+                            <input type="search" id="search" name="q" placeholder="Busca tu articulo" />
+                            <button class="btn btn-primary" type="submit">Buscar</button>
+                            <button type="button" id="clearSearch" class="btn btn-danger">X</button>
+                        </div>
                     </form>
-
-                    <div id="results">
-                        <!-- Aquí se supone que deben salir los resultados
-                        pinche berraco-->
-                    </div>
                     <h2 class="catalog-title">Productos</h2>
                     <div class="catalog-slider">
                         <table class="catalog-table" id="serviciosTable">
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nombre </th>
+                                <th> </th>
+                                <th>Nombre</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
                                 <th>Cantidad</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -97,10 +96,12 @@
                             <c:forEach var="articulo" items="${listaArticulos}" varStatus="status">
                                 <tr>
                                     <td>${articulo.identificador}</td>
+                                    <td> </td>
                                     <td>${articulo.nombre}</td>
                                     <td>${articulo.costo}</td>
                                     <td>${articulo.categoria}</td>
                                     <td>${articulo.stock}</td>
+                                    <td> </td>
                                     <td>
                                         <div class="menu-container">
                                             <button class="menu-button" onclick="toggleMenu('menu-${status.index}')">Opciones</button>
@@ -110,8 +111,12 @@
                                                     <button class="menu-button" onclick="abrirModal('modal-${articulo.id_producto}')">Modificar</button>
                                                 </div>
                                                 <input type="checkbox" id="btn-modal">
-                                                <button class="menu-button">Eliminar</button>
-                                                <input href="">
+
+                                                <div class="boton-modal-eliminar">
+                                                    <button class="menu-button"
+                                                            onclick="abrirModal('modal-2')">Eliminar</button>
+                                                </div>
+                                                <input type="checkbox" id="btn-modal-eliminar">
                                             </div>
                                         </div>
                                     </td>
@@ -185,13 +190,40 @@
         </div>
     </div>
 </c:forEach>
+
+<div class="container-modal-eliminar" id="modal-2">
+    <div class="content-modal">
+        <div class="container my-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between"></div>
+                <div class="card-body">
+                    <div class="row">
+                        <form id="eliminarForm">
+                            <div class="form-row d-flex justify-content-center">
+                                <label>Seguro que quieres eliminar el articulo: Limpiaparabrisas?</label>
+                            </div>
+                            <br>
+                            <div class="footer">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <div class="mr-3">
+                                        <input type="submit" value="Eliminar Articulo" class="btn btn-primary">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </form>
+                        <div class="btn-cerrar">
+                            <button class="btn btn-primary" onclick="cerrarModal('modal-2')">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/jsArticulos/scriptMenu.js"></script>
+<script src="assets/js/jsRegistrarEU/scriptMenu.js"></script>
 </body>
-
-
-
-
 </html>
