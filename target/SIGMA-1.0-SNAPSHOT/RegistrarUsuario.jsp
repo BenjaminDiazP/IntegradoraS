@@ -8,6 +8,7 @@
     <title>Registrar Cliente</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/cssRegistroEU/cssRegistroEU.css" type="text/css">
 
@@ -24,64 +25,61 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <form id="registroForm">
+                <form id="registroForm"  method="post" action="RegistroServlet" >
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" required>
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="nombre" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="apellidoPaterno">Apellido Paterno</label>
-                            <input type="text" class="form-control" id="apellidoPaterno" required>
+                            <label >Apellido Paterno</label>
+                            <input type="text" class="form-control" name="apellidoPaterno" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="apellidoMaterno">Apellido Materno</label>
-                            <input type="text" class="form-control" id="apellidoMaterno">
+                            <label >Apellido Materno</label>
+                            <input type="text" class="form-control" name="apellidoMaterno">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="curp">CURP</label>
-                            <input type="text" class="form-control" id="curp" required>
+                            <label >CURP</label>
+                            <input type="text" class="form-control" name="curp" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="rfc">RFC</label>
-                            <input type="text" class="form-control" id="rfc" required>
+                            <label >RFC</label>
+                            <input type="text" class="form-control" name="rfc" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="sexo">Sexo</label>
-                            <select class="form-control" id="sexo" required>
-                                <option value="Masculino">M</option>
-                                <option value="Femenino">F</option>
+                            <label >Sexo</label>
+                            <select class="form-control" name="sexo" required>
+                                <option value="M">M</option>
+                                <option value="F">F</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="telefono">Número Telefónico</label>
-                            <input type="text" class="form-control" id="telefono" required>
+                            <label >Número Telefónico</label>
+                            <input type="text" class="form-control" name="telefono" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="correo">Correo Electrónico</label>
-                            <input type="email" class="form-control" id="correo" required>
+                            <label >Correo Electrónico</label>
+                            <input type="email" class="form-control" name="correo" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="fechaNacimiento">Fecha de Nacimiento</label>
-                            <input type="date" class="form-control" id="fechaNacimiento" required>
+                            <label >Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" name="fechaNacimiento" required>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="direccion">Dirección</label>
-                            <input type="text" class="form-control" id="direccion" required>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <center><label for="imagen">Imagen</label></center>
-                            <input type="file" class="form-control" id="imagen" required accept="image/*">
+                            <label >Dirección</label>
+                            <input type="text" class="form-control" name="direccion" required>
                         </div>
                     </div>
                     <div class="footer">
                         <div class="col-12 d-flex justify-content-center">
                             <div class="mr-3">
                                 <input type="submit" value="Agregar usuario" class="btn btn-primary">
+                                <input type="hidden" value="Agregar usuario" name="Registrar" class="btn btn-primary">
                             </div>
                             <div class="custom-div">
                                 <a href="RegistrarAuto.jsp" type="submit" class="btn btn-primary">Siguiente</a>
@@ -124,167 +122,30 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Juanito Perez</td>
-                                <td>M</td>
-                                <td>juanito@example.com</td>
-                                <td>7776865476</td>
-                                <td>Calle Reforma</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-1')">Opciones</button>
-                                        <div class="menu-content" id="menu-1">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
+                            <c:forEach var="Cliente" items="${listaCliente}" varStatus="status">
+                                <tr>
+                                    <td>${Cliente.identificador}</td>
+                                    <td>${Cliente.nombre}</td>
+                                    <td>${Cliente.sexo}</td>
+                                    <td>${Cliente.correo}</td>
+                                    <td>${Cliente.noTelefono}</td>
+                                    <td>${Cliente.direccion}</td>
+                                    <td>
+                                        <div class="menu-container">
+                                            <button class="menu-button" onclick="toggleMenu('menu-${status.index}')">Opciones</button>
+                                            <div class="menu-content" id="menu-${status.index}">
+                                                <div class="boton-modal">
+                                                    <!-- Establecemos el ID del botón "Modificar" para abrir el modal correspondiente -->
+                                                    <button class="menu-button" onclick="abrirModal('modal-${Cliente.id_usuario}')">Modificar</button>
+                                                </div>
+                                                <input type="checkbox" id="btn-modal">
+                                                <button class="menu-button">Eliminar</button>
+                                                <input href="">
                                             </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Julian Barraza</td>
-                                <td>M</td>
-                                <td>Julian@example.com</td>
-                                <td>7779876585</td>
-                                <td>Calle Juan Aldama</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-2')">Opciones</button>
-                                        <div class="menu-content" id="menu-2">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Marisa Rodriguez</td>
-                                <td>F</td>
-                                <td>marisa@example.com</td>
-                                <td>8889876543</td>
-                                <td>Calle Juárez</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-3')">Opciones</button>
-                                        <div class="menu-content" id="menu-3">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Luis Gómez</td>
-                                <td>M</td>
-                                <td>luis@example.com</td>
-                                <td>5557891234</td>
-                                <td>Avenida Indep</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-4')">Opciones</button>
-                                        <div class="menu-content" id="menu-4">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Pedro Gutiérrez</td>
-                                <td>M</td>
-                                <td>pedro@example.com</td>
-                                <td>3334445556</td>
-                                <td>Calle Progreso</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-5')">Opciones</button>
-                                        <div class="menu-content" id="menu-5">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Carolina Méndez</td>
-                                <td>F</td>
-                                <td>carolina@example.com</td>
-                                <td>2223334445</td>
-                                <td>Calle del Bosque</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-6')">Opciones</button>
-                                        <div class="menu-content" id="menu-6">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>Ricardo López</td>
-                                <td>M</td>
-                                <td>ricardo@example.com</td>
-                                <td>7778889990</td>
-                                <td>Calle de la Luna</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-7')">Opciones</button>
-                                        <div class="menu-content" id="menu-7">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-5')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -393,6 +254,42 @@
         </div>
     </div>
 </div>
+
+<c:choose>
+    <c:when test="${not empty mensajeError}">
+        <script>
+            swal({
+                title: "Error de registro!",
+                text: "Hubo un error al insertar el cliente en la base de datos.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeError" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Registro Existoso!",
+                text: "Se ha registrado un Empleado correctamente.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -35,11 +35,6 @@ public class Usuario {
 
     }
 
-    public Usuario(String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {
-    }
-
-    public Usuario(String rol, String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {
-    }
 
     public int getId_usuario() {
         return id_usuario;
@@ -180,6 +175,37 @@ public class Usuario {
         this.identificador = identificador;
 
     }
+    public Usuario(String rol, String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {
+        this.rol = rol;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.rfc = rfc;
+        this.curp = curp;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+        this.codigo = codigo;
+        this.contrasenia = contrasenia;
+    }
+
+    public Usuario(String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.rfc = rfc;
+        this.curp = curp;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+        this.codigo = codigo;
+        this.contrasenia = contrasenia;
+    }
+
 
     public Usuario(){
 

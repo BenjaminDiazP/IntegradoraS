@@ -23,10 +23,10 @@ public class LoginServlet extends HttpServlet {
             String contrasenia = req.getParameter("contra");
             LoginDao dao = new LoginDao();
             Usuario usr = (Usuario) dao.findOne(correo, contrasenia);
-            req.getSession().setAttribute("tipoSesion", usr.getRol()); //agregue esto para el filtro con esto logra jalar el rol
             System.out.println(correo);
             System.out.println(contrasenia);
                 if (usr != null) {
+                    req.getSession().setAttribute("tipoSesion", usr.getRol()); // mivo esto adentro del if estaba fuera y por eso ada un error al no econtrar las credencial al intentar iniciar sesio pr que regresa un null en el rol
                     switch (usr.getRol()) {
                         case "Gerente":
                             req.getSession().setAttribute("usuario", usr.getNombre());
@@ -58,40 +58,11 @@ public class LoginServlet extends HttpServlet {
                             break;
                     }
                 }else{
-                    req.getSession().setAttribute("infocontra", "No hay nada");
+                    req.getSession().setAttribute("ErrorSesion", "Error al iniciar sesión, por favor verifica tus credenciales.");
                     resp.sendRedirect("InicioSesion.jsp");
 
                 }
 
-        }/*else if(accion.equals("RecuperarCon")){
-            String email = req.getParameter("correo");
-
-            if (!email.isEmpty()){
-                LoginDao dao = new LoginDao();
-                Usuario usr = (Usuario) dao.findOne(email);
-                if (usr.getId_usuario()!=0){
-                    //si existe un usuario con ese correo en la base de datos
-                    SendEmail mail = new SendEmail();
-                    try {
-                        mail.sendEmail(
-                                usr.getCorreo(),
-                                "Recuperación de contraseña",
-                                "Has solicitado la recuperacion " +
-                                        "de tu contraseña para la pagina " +
-                                        "web de zail </br></br> por favor " +
-                                        "da click en el siguiente enlace para " +
-                                        "recuperar tu contraseña:</br>" +
-                                        "<a href=\"modificarContra.jsp?codigo="+usr.getCodigo()+"\">Recuperación</a>",
-                                new File(
-                                        req.getSession().
-                                                getServletContext().
-                                                getResource("/assets/img/logo.png").
-                                                toURI()));
-                    } catch (URISyntaxException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }*/
+        }
     }
 }

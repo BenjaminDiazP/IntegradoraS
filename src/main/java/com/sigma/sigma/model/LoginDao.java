@@ -55,10 +55,19 @@ public class    LoginDao implements DaoRepository{
         }
         return usuario;
     }
+
+
+
+
+
+
     public Object findOne(String correo) {
 
         return null;
     }
+
+
+
     @Override
     public boolean update(int id, String rol, Object object) {
         return false;

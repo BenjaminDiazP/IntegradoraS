@@ -79,8 +79,8 @@
                             <label >Rol</label>
                             <select class="form-control" name="rol" required>
                                 <option value="">Seleccionar Rol</option>
-                                <option value="Taller mecánico">Taller mecánico</option>
-                                <option value="Recepción">Recepción</option>
+                                <option value="Taller mecanico">Taller mecánico</option>
+                                <option value="Recepcion">Recepción</option>
                                 <option value="Caja">Caja</option>
                             </select>
                         </div>
@@ -267,30 +267,38 @@
     </div>
 </div>
 
-
-<c:if test="${not empty mensajeError}">
-    <script>
-        swal({
-            title: "Error de registro!",
-            text: "Hubo un error al insertar el cliente en la base de datos.",
-            icon: "error",
-
-        });
-    </script>
-
-</c:if>
-<c:if test="${not empty mensajeExito}">
-    <script>
-        swal({
-            title: "Registro Existoso!",
-            text: "Se ha registrado un Empleado correctamente.",
-            icon: "success",
-
-        });
-    </script>
-
-</c:if>
-
+<c:choose>
+    <c:when test="${not empty mensajeError}">
+        <script>
+            swal({
+                title: "Error de registro!",
+                text: "Hubo un error al insertar el cliente en la base de datos.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeError" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Registro Existoso!",
+                text: "Se ha registrado un Empleado correctamente.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
 
 
 

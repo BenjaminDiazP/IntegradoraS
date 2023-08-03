@@ -92,7 +92,7 @@
                                 </a>
                             </div>
                             <div class="card">
-                                <a href="RegistrarUsuario.jsp" class="funcion">
+                                <a href="RegistroServlet?tipo=cliente" class="funcion">
                                     <div class="card-body">
                                         <h4 class="card-title">Clientes</h4>
 
@@ -168,7 +168,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-2">
-                    <a href="InicioSesion.jsp" id="cerrarSesion" class="btn btn-block">Cerrar sesión</a>
+                    <a href="LogoutServlet" id="cerrarSesion" class="btn btn-block">Cerrar sesión</a>
                 </div>
             </div>
 
