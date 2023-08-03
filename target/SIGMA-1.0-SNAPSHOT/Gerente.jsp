@@ -84,7 +84,7 @@
                         </a>
                         <div id="extraFunciones1" class="collapse extra-funciones">
                             <div class="card">
-                                <a href="RegistrarEmpleado.jsp" class="funcion">
+                                <a href="RegistroServlet?tipo=empleado" class="funcion">
                                     <div class="card-body">
                                         <h4 class="card-title">Empleados</h4>
 

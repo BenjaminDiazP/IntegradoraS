@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RegistroDao implements DaoRepository {
 
@@ -81,7 +82,7 @@ public class RegistroDao implements DaoRepository {
         Connection con = connection.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "insert into Cliente(Nombre, Apellido1, Apellido2,Rfc, Curp, Direccion, Sexo, NoTelefono, Correo,FechaNac,Contrasenia, Codoigo)"+
+                    "insert into Cliente(Nombre, Apellido1, Apellido2,Rfc, Curp, Direccion, Sexo, NoTelefono, Correo,FechaNac,Contrasenia, Codigo)"+
                             "values(?,?,?,?,?,?,?,?,?,?,sha2(?,224),sha2(?,224))"
             );
             stmt.setString(1,usr.getNombre());
@@ -146,6 +147,47 @@ public class RegistroDao implements DaoRepository {
         return false;
     }
 
+    public List getAllEmpleado(){
+        List<Usuario> listaEmpleado = new ArrayList<>();
+        MySqlConector connection = new MySqlConector();
+        Connection con = connection.connect();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT *FROM Empleado"
+            );
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                Usuario usr = new Usuario();
+                int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
+                usr.setIdentificador(randomNum);
+                usr.setNombre(res.getString("nombre"));
+                usr.setApellido1(res.getString("apellido1"));
+                usr.setApellido2(res.getString("apellido2"));
+                usr.setCurp(res.getString("Curp"));
+                usr.setRfc(res.getString("Rfc"));
+                usr.setFechaNac(res.getString("FechaNac"));
+                usr.setSexo(res.getString("Sexo"));
+                usr.setDireccion(res.getString("Direccion"));
+                usr.setCorreo(res.getString("Correo"));
+                usr.setNoTelefono(res.getString("NoTelefono"));
+                usr.setRol(res.getString("Rol"));
+                /*
+                art.setIdentificador(randomNum);
+                art.setId_producto(res.getInt(1));
+                art.setNombre(res.getString("nombre"));
+                art.setCosto(res.getDouble("costo"));
+                art.setCategoria(res.getString("categoria"));
+                art.setStock(res.getInt("stock"));
+*/
+                listaEmpleado.add(usr);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaEmpleado;
+
+    }
 
 
     public Object findOne(String correo) {

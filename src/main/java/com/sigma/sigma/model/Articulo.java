@@ -8,6 +8,7 @@ public class Articulo {
     private String categoria;
     private int stock;
     private int identificador;
+    private String imagen;
 
     public int getIdentificador() {
         return identificador;
@@ -23,6 +24,14 @@ public class Articulo {
         this.costo = costo;
         this.categoria = categoria;
         this.stock = stock;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public int getId_producto() {
