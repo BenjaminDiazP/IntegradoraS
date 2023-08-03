@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="assets/css/cssRegistroEU/cssRegistroEU.css" type="text/css">
 </head>
 
-<body>
+<body >
 
 <div class="container my-3">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h2>Registro de Empleados</h2>
             <nav>
-                <a href="Gerente.jsp" class="nav_link">Regresar</a>
+                <a href="#" class="nav_link">Regresar</a>
             </nav>
         </div>
         <div class="card-body">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label >Apellido Materno</label>
-                            <input type="text" class="form-control" name="apellidoMaterno">
+                            <input type="text" class="form-control" name="apellidoMaterno" required>
                         </div>
                         <div class="form-group col-md-3">
                             <label >CURP</label>
@@ -52,6 +52,7 @@
                         <div class="form-group col-md-3">
                             <label >Sexo</label>
                             <select class="form-control" name="sexo" required>
+                                <option value="">Selecciona</option>
                                 <option value="M">M</option>
                                 <option value="F">F</option>
                             </select>
@@ -77,14 +78,11 @@
                         <div class="form-group col-md-3">
                             <label >Rol</label>
                             <select class="form-control" name="rol" required>
-                                <option value="Taller mecanico">Taller mecanico</option>
-                                <option value="Recepcion">Recepcion</option>
+                                <option value="">Seleccionar Rol</option>
+                                <option value="Taller mecanico">Taller mecánico</option>
+                                <option value="Recepcion">Recepción</option>
                                 <option value="Caja">Caja</option>
                             </select>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <center><label for="imagen">Imagen</label></center>
-                            <input type="file" class="form-control" id="imagen" required accept="image/*">
                         </div>
                     </div>
                     <div class="footer">
@@ -119,8 +117,8 @@
                         <table class="catalog-table" id="serviciosTable">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Nombre</th>
+                                <th>ID Empleado</th>
+                                <th>Nombre de Empleado</th>
                                 <th>Sexo</th>
                                 <th>Correo Electronico</th>
                                 <th>Número de Telefono</th>
@@ -130,173 +128,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Juanito Perez</td>
-                                <td>M</td>
-                                <td>juanito@example.com</td>
-                                <td>7776865476</td>
-                                <td>Calle Reforma</td>
-                                <td>Gerente</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-1')">Opciones</button>
-                                        <div class="menu-content" id="menu-1">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
+                            <c:forEach var="empleado" items="${listaEmpleado}" varStatus="status">
+                                <tr>
+                                    <td>${empleado.identificador}</td>
+                                    <td>${empleado.nombre}</td>
+                                    <td>${empleado.sexo}</td>
+                                    <td>${empleado.correo}</td>
+                                    <td>${empleado.noTelefono}</td>
+                                    <td>${empleado.direccion}</td>
+                                    <td>${empleado.rol}</td>
+                                    <td>
+                                        <div class="menu-container">
+                                            <button class="menu-button" onclick="toggleMenu('menu-${status.index}')">Opciones</button>
+                                            <div class="menu-content" id="menu-${status.index}">
+                                                <div class="boton-modal">
+                                                    <!-- Establecemos el ID del botón "Modificar" para abrir el modal correspondiente -->
+                                                    <button class="menu-button" onclick="abrirModal('modal-${empleado.id_usuario}')">Modificar</button>
+                                                </div>
+                                                <input type="checkbox" id="btn-modal">
+                                                <button class="menu-button">Eliminar</button>
+                                                <input href="">
                                             </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Panchito Barraza</td>
-                                <td>M</td>
-                                <td>panchito@example.com</td>
-                                <td>7779876585</td>
-                                <td>Calle Juan Aldama</td>
-                                <td>Recepcionista</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-2')">Opciones</button>
-                                        <div class="menu-content" id="menu-2">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>María Rodriguez</td>
-                                <td>F</td>
-                                <td>maria@example.com</td>
-                                <td>8889876543</td>
-                                <td>Calle Juárez</td>
-                                <td>Recepcionista</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-3')">Opciones</button>
-                                        <div class="menu-content" id="menu-3">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Luis Gómez</td>
-                                <td>M</td>
-                                <td>luis@example.com</td>
-                                <td>5557891234</td>
-                                <td>Avenida Indep</td>
-                                <td>Caja</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-4')">Opciones</button>
-                                        <div class="menu-content" id="menu-4">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Pedro Gutiérrez</td>
-                                <td>M</td>
-                                <td>pedro@example.com</td>
-                                <td>3334445556</td>
-                                <td>Calle Progreso</td>
-                                <td>Mecánico</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-5')">Opciones</button>
-                                        <div class="menu-content" id="menu-5">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Carolina Méndez</td>
-                                <td>F</td>
-                                <td>carolina@example.com</td>
-                                <td>2223334445</td>
-                                <td>Calle del Bosque</td>
-                                <td>Mecánico</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-6')">Opciones</button>
-                                        <div class="menu-content" id="menu-6">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>Ricardo López</td>
-                                <td>M</td>
-                                <td>ricardo@example.com</td>
-                                <td>7778889990</td>
-                                <td>Calle de la Luna</td>
-                                <td>Mecánico</td>
-                                <td>
-                                    <div class="menu-container">
-                                        <button class="menu-button" onclick="toggleMenu('menu-7')">Opciones</button>
-                                        <div class="menu-content" id="menu-7">
-                                            <div class="boton-modal">
-                                                <button class="menu-button" onclick="abrirModal('modal-4')">Modificar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal">
-                                            <div class="boton-modal-eliminar">
-                                                <button class="menu-button" onclick="abrirModal('modal-2')">Eliminar</button>
-                                            </div>
-                                            <input type="checkbox" id="btn-modal-eliminar">
-                                        </div>
-                                    </div>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -305,7 +161,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="container-modal-eliminar" id="modal-2">
     <div class="content-modal">
@@ -412,30 +267,38 @@
     </div>
 </div>
 
-
-<c:if test="${not empty mensajeError}">
-    <script>
-        swal({
-            title: "Error de registro!",
-            text: "Hubo un error al insertar el cliente en la base de datos.",
-            icon: "error",
-
-        });
-    </script>
-
-</c:if>
-<c:if test="${not empty mensajeExito}">
-    <script>
-        swal({
-            title: "Registro Existoso!",
-            text: "Se ha registrado un Empleado correctamente.",
-            icon: "success",
-
-        });
-    </script>
-
-</c:if>
-
+<c:choose>
+    <c:when test="${not empty mensajeError}">
+        <script>
+            swal({
+                title: "Error de registro!",
+                text: "Hubo un error al insertar el cliente en la base de datos.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeError" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Registro Existoso!",
+                text: "Se ha registrado un Empleado correctamente.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
 
 
 

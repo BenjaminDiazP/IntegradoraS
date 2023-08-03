@@ -16,8 +16,9 @@ public class Usuario {
     private String fechaNac;
     private String contrasenia;
     private String codigo;
+    private int identificador;
 
-    public Usuario( String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {this.id_usuario = id_usuario;
+    public Usuario( String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo,int identificador) {this.id_usuario = id_usuario;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -30,8 +31,10 @@ public class Usuario {
         this.fechaNac = fechaNac;
         this.contrasenia = contrasenia;
         this.codigo = codigo;
+        this.identificador = identificador;
 
     }
+
 
     public int getId_usuario() {
         return id_usuario;
@@ -147,6 +150,31 @@ public class Usuario {
         this.codigo = codigo;
     }
 
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(int identificador) {
+        this.identificador = identificador;
+    }
+
+    public Usuario(String rol, String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo,int identificador) {
+        this.rol = rol;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.rfc = rfc;
+        this.curp = curp;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+        this.codigo = codigo;
+        this.contrasenia = contrasenia;
+        this.identificador = identificador;
+
+    }
     public Usuario(String rol, String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {
         this.rol = rol;
         this.nombre = nombre;
@@ -161,8 +189,23 @@ public class Usuario {
         this.fechaNac = fechaNac;
         this.codigo = codigo;
         this.contrasenia = contrasenia;
-
     }
+
+    public Usuario(String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo) {
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.rfc = rfc;
+        this.curp = curp;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
+        this.fechaNac = fechaNac;
+        this.codigo = codigo;
+        this.contrasenia = contrasenia;
+    }
+
 
     public Usuario(){
 

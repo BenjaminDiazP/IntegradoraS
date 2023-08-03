@@ -2,11 +2,13 @@ package com.sigma.sigma.model;
 
 import com.sigma.sigma.utils.MySqlConector;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,23 +32,22 @@ public class RegistroArticulosDao implements DaoRepository {
     }
 
 
-    public boolean insert(Articulo art) {
+    public boolean insert(Articulo art, InputStream imageBytes) {
         MySqlConector connection = new MySqlConector();
         Connection con = connection.connect();
         try{
             PreparedStatement stmt = con.prepareStatement(
-                    "insert into Producto(nombre,costo,categoria,stock)"+
-                            "values(?,?,?,?)"
+                    "insert into Producto(nombre,costo,categoria,stock,imagen)"+
+                            "values(?,?,?,?,?)"
             );
             stmt.setString(1,art.getNombre());
             stmt.setString(2, String.valueOf(art.getCosto()));
             stmt.setString(3,art.getCategoria());
             stmt.setString(4, String.valueOf(art.getStock()));
-
+            stmt.setBlob(5, imageBytes);
             if(stmt.executeUpdate() > 0){
                 return true;
             }
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -61,7 +62,7 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = connection.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT *FROM Producto"
+                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != ''"
             );
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
@@ -74,6 +75,9 @@ public class RegistroArticulosDao implements DaoRepository {
                 art.setCosto(res.getDouble("costo"));
                 art.setCategoria(res.getString("categoria"));
                 art.setStock(res.getInt("stock"));
+                byte[] image = res.getBytes("Imagen");
+                String imageStr = Base64.getEncoder().encodeToString(image);
+                art.setImagen(imageStr);
 
                 listaArticulos.add(art);
             }

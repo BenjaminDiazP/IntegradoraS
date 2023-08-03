@@ -1,5 +1,7 @@
 package com.sigma.sigma.controller;
 
+import com.sigma.sigma.model.Articulo;
+import com.sigma.sigma.model.RegistroArticulosDao;
 import com.sigma.sigma.model.RegistroDao;
 import com.sigma.sigma.model.Usuario;
 import com.sigma.sigma.utils.Send;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Random;
 
 @WebServlet(name = "RegistroServlet", value = "/RegistroServlet")
@@ -43,33 +46,36 @@ public class RegistroServlet extends HttpServlet {
 
 
         if (accion.equals("Agregar usuario")) {
-
+            req.getSession().removeAttribute("mensajeError");
             boolean envio = dao.insertCliente(new Usuario(nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
-
             if (envio != false){
                 SendEmail mail = new SendEmail();
                 try{
+                    System.out.println(contrasenia);
                     mail.sendEmail(
                             correo,
-                            "Prueba de envio",
-                            "<h1>Hola como estas </h1>",
+                            "Bienvenido a SIGMA" ,
+                            "<p >Gracias por registrarte en nuestro sistema " +"<strong>"+nombre+"</strong>"+"<br>"+" Ahora podras iniciar sesión en nuestro sistema con la siguiente " +
+                                    "contraseña : " + "<strong>"+contrasenia+"</strong>"  + "</p>",
                             new File(
                                     req.getSession().
                                             getServletContext().
-                                            getResource("/assets/img/logo.png").
+                                            getResource("/assets/img/imagesPaginaPrincipal/logo.png").
                                             toURI()));
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }
+                req.getSession().setAttribute("mensajeExito", "Registro Exitoso");
 
             }else{
+                req.getSession().setAttribute("mensajeError", "Hubo un error al insertar el cliente en la base de datos.");
 
             }
-
+            resp.sendRedirect("RegistroServlet?tipo=cliente");
 
         }else if (accion.equals("Agregar Empleado")){
-
-          boolean envio1=  dao.insertEmpleado(new Usuario(rol,nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
+            req.getSession().removeAttribute("mensajeError");
+            boolean envio1=  dao.insertEmpleado(new Usuario(rol,nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
             if (envio1 != false){
                 SendEmail mail = new SendEmail();
                 try{
@@ -87,31 +93,27 @@ public class RegistroServlet extends HttpServlet {
                 } catch (URISyntaxException e) {
                     throw new RuntimeException(e);
                 }
-
-
                 req.getSession().setAttribute("mensajeExito", "Registro Exitoso");
-                req.getSession().setAttribute("mensajeError", null);
-                resp.sendRedirect("RegistrarEmpleado.jsp");
-                return;
             }else{
-
                 req.getSession().setAttribute("mensajeError", "Hubo un error al insertar el cliente en la base de datos.");
-                req.getSession().setAttribute("mensajeExito", null);
-                resp.sendRedirect("RegistrarEmpleado.jsp");
-                return;
             }
-
-
+            resp.sendRedirect("RegistroServlet?tipo=empleado");
         }
 
     }
-
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.sendRedirect("Gerente.jsp");
-
-
+        String tipo = req.getParameter("tipo");
+        RegistroDao dao = new RegistroDao();
+        if (tipo.equals("empleado")){
+            List<Usuario> listaEmpleado = dao.getAllEmpleado();
+            req.getSession().setAttribute("listaEmpleado", listaEmpleado);
+            req.getRequestDispatcher("RegistrarEmpleado.jsp").forward(req, resp);
+        } else if (tipo.equals("cliente")) {
+            List<Usuario> listaCliente = dao.getAllCliente();
+            req.getSession().setAttribute("listaCliente", listaCliente);
+            req.getRequestDispatcher("RegistrarUsuario.jsp").forward(req, resp);
+        }
 
 
     }
@@ -128,3 +130,4 @@ public class RegistroServlet extends HttpServlet {
         return cadena.toString();
     }
 }
+

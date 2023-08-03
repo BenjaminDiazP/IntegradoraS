@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
 <html lang="en">
 
 <head>
@@ -37,20 +35,21 @@
         <a  href="Recuperacion.jsp" class="login-box-form-submit">Recuperar contraseña</a>
     </form>
     <br>
-
 </div>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
 
-<c:if test="${not empty infocontra}">
+<c:if test="${not empty sessionScope.ErrorSesion}">
     <script>
         swal({
-            title: "Error de credenciales!",
-            text: "Tu contraseña o correo son incorrectos!",
+            title: "Error de Inicio de Sesión",
+            text: "${sessionScope.ErrorSesion}",
             icon: "error",
-
+            button: "Aceptar",
         });
     </script>
+    <c:remove var="ErrorSesion" scope="session"/>
 </c:if>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

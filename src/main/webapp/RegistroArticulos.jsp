@@ -24,7 +24,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="container mx-auto">
-                    <form  action="RegistroArticulosServlet" method="post">
+                    <form  action="RegistroArticulosServlet" method="post" enctype="multipart/form-data">
                         <div class="form-row d-flex justify-content-center">
                             <div class="form-group col-md-3">
                                 <label >Nombre</label>
@@ -43,6 +43,12 @@
                             <div class="form-group col-md-3">
                                 <label >Cantidad</label>
                                 <input type="number" class="form-control" name="stock" required>
+                            </div>
+                        </div>
+                        <div class="form-row d-flex justify-content-center">
+                            <div class="form-group col-md-3">
+                                <label >Imagen</label>
+                                <input type="file" class="form-control" name="imagen" required>
                             </div>
                         </div>
                         <div class="footer">
@@ -85,8 +91,8 @@
                                 <th>No</th>
                                 <th> </th>
                                 <th>Nombre</th>
-                                <th>Categoria</th>
                                 <th>Precio</th>
+                                <th>Categoria</th>
                                 <th>Cantidad</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -96,7 +102,7 @@
                             <c:forEach var="articulo" items="${listaArticulos}" varStatus="status">
                                 <tr>
                                     <td>${articulo.identificador}</td>
-                                    <td> </td>
+                                    <td><img src="data:imagen/png;base64, ${articulo.imagen}" width="200" height="200"  ></td>
                                     <td>${articulo.nombre}</td>
                                     <td>${articulo.costo}</td>
                                     <td>${articulo.categoria}</td>
