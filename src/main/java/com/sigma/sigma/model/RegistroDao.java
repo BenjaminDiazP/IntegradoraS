@@ -165,6 +165,7 @@ public class RegistroDao implements DaoRepository {
                 Usuario usr = new Usuario();
                 int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
                 usr.setIdentificador(randomNum);
+                usr.setId_usuario(res.getInt(1));
                 usr.setNombre(res.getString("nombre"));
                 usr.setApellido1(res.getString("apellido1"));
                 usr.setApellido2(res.getString("apellido2"));

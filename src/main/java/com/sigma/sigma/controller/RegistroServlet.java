@@ -107,7 +107,9 @@ public class RegistroServlet extends HttpServlet {
         RegistroDao dao = new RegistroDao();
         if (tipo.equals("empleado")){
             List<Usuario> listaEmpleado = dao.getAllEmpleado();
+
             req.getSession().setAttribute("listaEmpleado", listaEmpleado);
+
             req.getRequestDispatcher("RegistrarEmpleado.jsp").forward(req, resp);
         } else if (tipo.equals("cliente")) {
             List<Usuario> listaCliente = dao.getAllCliente();

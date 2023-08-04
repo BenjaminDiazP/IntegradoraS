@@ -147,13 +147,14 @@
                                                 </div>
                                                 <input type="checkbox" id="btn-modal">
                                                 <button class="menu-button">Eliminar</button>
-                                                <input href="">
+                                                <input id="boton-modal-eliminar" type="checkbox">
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -192,80 +193,79 @@
         </div>
     </div>
 </div>
+<!-- Modales -->
+<c:forEach var="emp" items="${listaEmpleado}" varStatus="status">
+    <div class="container-modal" id="modal-${emp.id_usuario}">
+        <div class="content-modal">
 
-<div class="container-modal" id="modal-4">
-    <div class="content-modal">
+            <div class="container my-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        Modificar Empleado
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <form id="modificarForm" action="RegistroServlet" method="post">
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control" name="nombre" required value="${emp.nombre}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Apellido Paterno</label>
+                                        <input type="text" class="form-control" name="apellidoPaterno" required value="${emp.nombre}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Apellido Materno</label>
+                                        <input type="text" class="form-control" name="apellidoMaterno" value="${emp.nombre}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Dirección</label>
+                                        <input type="text" class="form-control" name="direccion" required value="${emp.nombre}">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label >Sexo</label>
+                                        <select class="form-control" name="sexo" required value="${emp.nombre}">
+                                            <option value="M">M</option>
+                                            <option value="F">F</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Número Telefónico</label>
+                                        <input type="text" class="form-control" name="telefono" required value="${emp.nombre}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Correo Electrónico</label>
+                                        <input type="email" class="form-control" name="correo" required value="${emp.nombre}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Rol</label>
+                                        <select class="form-control" name="rol" required value="${emp.nombre}">
+                                            <option value="Taller mecanico">Taller mecanico</option >
+                                            <option value="Recepcion">Recepcion</option>
+                                            <option value="Caja">Caja</option>
+                                        </select>
+                                    </div>
 
-        <div class="container my-3">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    Modificar Empleado
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <form id="modificarForm">
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" required>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="apellidoPaterno">Apellido Paterno</label>
-                                    <input type="text" class="form-control" id="apellidoPaterno" required>
+                                <div class="footer">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <input type="submit" value="Modificar empleado" class="btn btn-primary">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="apellidoMaterno">Apellido Materno</label>
-                                    <input type="text" class="form-control" id="apellidoMaterno">
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="direccion">Dirección</label>
-                                    <input type="text" class="form-control" id="direccion" required>
-                                </div>
+                            </form>
+                            <div class="btn-cerrar">
+                                <button class="btn btn-primary" onclick="cerrarModal('modal-${emp.id_usuario}')">Cerrar</button>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="sexo">Sexo</label>
-                                    <select class="form-control" id="sexo" required>
-                                        <option value="Masculino">M</option>
-                                        <option value="Femenino">F</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="telefono">Número Telefónico</label>
-                                    <input type="text" class="form-control" id="telefono" required>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="correo">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="correo" required>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="rol">Rol</label>
-                                    <select class="form-control" id="rol" required>
-                                        <option value="Taller mecanico">Taller mecanico</option>
-                                        <option value="Recepcion">Recepcion</option>
-                                        <option value="Caja">Caja</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <center><label for="imagenM">Imagen</label></center>
-                                    <input type="file" class="form-control" id="imagenM" required accept="image/*">
-                                </div>
-                            </div>
-                            <div class="footer">
-                                <div class="col-12 d-flex justify-content-center">
-                                    <input type="submit" value="Modificar empleado" class="btn btn-primary">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="btn-cerrar">
-                            <button class="btn btn-primary" onclick="cerrarModal('modal-4')">Cerrar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</c:forEach>
 
 <c:choose>
     <c:when test="${not empty mensajeError}">
