@@ -9,6 +9,7 @@ public class Articulo {
     private int stock;
     private int identificador;
     private String imagen;
+    private int estado;
 
     public int getIdentificador() {
         return identificador;
@@ -24,6 +25,15 @@ public class Articulo {
         this.costo = costo;
         this.categoria = categoria;
         this.stock = stock;
+
+    }
+    public Articulo(int id_producto, String nombre, double costo, String categoria, int stock,int estado) {
+        this.id_producto = id_producto;
+        this.nombre = nombre;
+        this.costo = costo;
+        this.categoria = categoria;
+        this.stock = stock;
+        this.estado = estado;
     }
 
     public String getImagen() {
@@ -74,12 +84,21 @@ public class Articulo {
         this.stock = stock;
     }
 
-    public Articulo( String nombre, Double costo, String categoria, int stock) {
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public Articulo(String nombre, Double costo, String categoria, int stock) {
         this.nombre = nombre;
         this.costo = costo;
         this.categoria = categoria;
         this.stock = stock;
     }
+
 
     public Articulo() {
 

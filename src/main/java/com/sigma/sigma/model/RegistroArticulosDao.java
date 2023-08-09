@@ -75,6 +75,7 @@ public class RegistroArticulosDao implements DaoRepository {
                 art.setCosto(res.getDouble("costo"));
                 art.setCategoria(res.getString("categoria"));
                 art.setStock(res.getInt("stock"));
+                art.setEstado(res.getInt("Estado"));
                 byte[] image = res.getBytes("Imagen");
                 String imageStr = Base64.getEncoder().encodeToString(image);
                 art.setImagen(imageStr);
@@ -88,6 +89,77 @@ public class RegistroArticulosDao implements DaoRepository {
         return listaArticulos;
 
     }
+
+    //listaArticulosProductos
+    public List getAllArticulosProductos(){
+        List<Articulo> listaArticulosProductos = new ArrayList<>();
+        MySqlConector connection = new MySqlConector();
+        Connection con = connection.connect();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND categoria = 'Producto'" +
+                            "AND estado == 1 AND cantidad == 1"
+            );
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+
+                Articulo art = new Articulo();
+                int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
+                art.setIdentificador(randomNum);
+                art.setId_producto(res.getInt(1));
+                art.setNombre(res.getString("nombre"));
+                art.setCosto(res.getDouble("costo"));
+                art.setCategoria(res.getString("categoria"));
+                art.setStock(res.getInt("stock"));
+                byte[] image = res.getBytes("Imagen");
+                String imageStr = Base64.getEncoder().encodeToString(image);
+                art.setImagen(imageStr);
+
+                listaArticulosProductos.add(art);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaArticulosProductos;
+
+    }
+
+    //listaArticulosServicis
+    public List getAllArticulosServicios(){
+        List<Articulo> listaArticulosServicios = new ArrayList<>();
+        MySqlConector connection = new MySqlConector();
+        Connection con = connection.connect();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND categoria = 'Servicio'" +
+                            "AND estado == 1 AND cantidad == 1"
+            );
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+
+                Articulo art = new Articulo();
+                int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
+                art.setIdentificador(randomNum);
+                art.setId_producto(res.getInt(1));
+                art.setNombre(res.getString("nombre"));
+                art.setCosto(res.getDouble("costo"));
+                art.setCategoria(res.getString("categoria"));
+                art.setStock(res.getInt("stock"));
+                byte[] image = res.getBytes("Imagen");
+                String imageStr = Base64.getEncoder().encodeToString(image);
+                art.setImagen(imageStr);
+
+                listaArticulosServicios.add(art);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return listaArticulosServicios;
+
+    }
+
 
     public boolean updateArticulo(Articulo articulo) {
         MySqlConector conector = new MySqlConector();
@@ -121,9 +193,34 @@ public class RegistroArticulosDao implements DaoRepository {
             }
         }
     }
-    @Override
-    public boolean update(int id, String rol, Object object) {
-        return false;
+
+    //modificaciones
+    public boolean cambiarEstado(int id) {
+        MySqlConector conector = new MySqlConector();
+        Connection con = conector.connect();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE Producto SET Estado=0 WHERE id_producto=?");
+            stmt.setInt(1, id);
+
+            // Ejecutar la consulta de actualización
+            int filasActualizadas = stmt.executeUpdate();
+
+            // Si la consulta se ejecutó con éxito y actualizó al menos una fila, devolver true
+            return filasActualizadas > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el artículo", e);
+        } finally {
+            // Cerrar la conexión y liberar recursos
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                // Manejar el error al cerrar la conexión (opcional)
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -131,4 +228,65 @@ public class RegistroArticulosDao implements DaoRepository {
 
         return false;
     }
+    public int BuscarEstado(int id) {
+        MySqlConector connection = new MySqlConector();
+        Connection con = connection.connect();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT Estado,stock from Producto where id_producto = ?"
+            );
+            stmt.setInt(1, id);
+            ResultSet res = stmt.executeQuery();
+            if (res.next()) {
+                int estado = res.getInt("estado");
+                return estado;
+            } else {
+                throw new RuntimeException("No se encontró ningún registro con el ID proporcionado.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar el estado: " + e.getMessage(), e);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public boolean cambiarEstado1(int id) {
+        MySqlConector conector = new MySqlConector();
+        Connection con = conector.connect();
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "UPDATE Producto SET Estado=1 WHERE id_producto=?");
+            stmt.setInt(1, id);
+
+            // Ejecutar la consulta de actualización
+            int filasActualizadas = stmt.executeUpdate();
+
+            // Si la consulta se ejecutó con éxito y actualizó al menos una fila, devolver true
+            return filasActualizadas > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar el artículo", e);
+        } finally {
+            // Cerrar la conexión y liberar recursos
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                // Manejar el error al cerrar la conexión (opcional)
+                e.printStackTrace();
+            }
+        }
+    }
+    /////////////////////////////////////////
+
+
+
+    @Override
+    public boolean update(int id, String rol, Object object) {
+        return false;
+    }
+
 }

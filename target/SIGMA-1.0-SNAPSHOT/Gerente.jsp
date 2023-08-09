@@ -120,7 +120,7 @@
                         </a>
                         <div id="extraFunciones2" class="collapse extra-funciones">
                             <div class="card">
-                                <a href="#" class="funcion">
+                                <a href="RegistroArticulosServlet?tipo=paquetes" class="funcion">
                                     <div class="card-body">
                                         <h4 class="card-title">Paquetes</h4>
 
@@ -128,7 +128,7 @@
                                 </a>
                             </div>
                             <div class="card">
-                                <a href="RegistroArticulosServlet" class="funcion">
+                                <a href="RegistroArticulosServlet?tipo=articulos" class="funcion">
                                     <div class="card-body">
                                         <h4 class="card-title">Articulos</h4>
                                     </div>

@@ -55,7 +55,7 @@
                             <div class="col-12 d-flex justify-content-center">
                                 <div class="mr-3">
                                     <input type="submit" value="Agregar Articulo" class="btn btn-primary">
-                                    <input type="hidden" name="RegistrarA" value="AgregarArticulo">
+                                    <input type="hidden" name="accion" value="AgregarArticulo">
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                 <div class="catalog-container">
                     <form id="searchForm" action="" method="get">
                         <div class="search-container">
-                            <input type="search" id="search" name="q" placeholder="Busca tu articulo" />
+                            <input type="search" id="search" name="q" placeholder="Busca tu articulo">
                             <button class="btn btn-primary" type="submit">Buscar</button>
                             <button type="button" id="clearSearch" class="btn btn-danger">X</button>
                         </div>
@@ -102,12 +102,21 @@
                             <c:forEach var="articulo" items="${listaArticulos}" varStatus="status">
                                 <tr>
                                     <td>${articulo.identificador}</td>
-                                    <td><img src="data:imagen/png;base64, ${articulo.imagen}" width="200" height="200"  ></td>
+                                    <td><img src="data:imagen/png;base64, ${articulo.imagen}" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #ccc; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);"  ></td>
                                     <td>${articulo.nombre}</td>
                                     <td>${articulo.costo}</td>
                                     <td>${articulo.categoria}</td>
                                     <td>${articulo.stock}</td>
-                                    <td> </td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${articulo.estado == 1 && articulo.stock >0}">
+                                                Disponible
+                                            </c:when>
+                                            <c:otherwise>
+                                                No Disponible
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td>
                                         <div class="menu-container">
                                             <button class="menu-button" onclick="toggleMenu('menu-${status.index}')">Opciones</button>
@@ -120,7 +129,7 @@
 
                                                 <div class="boton-modal-eliminar">
                                                     <button class="menu-button"
-                                                            onclick="abrirModal('modal-2')">Eliminar</button>
+                                                            onclick="abrirModal('modal2-${articulo.id_producto}')">Eliminar</button>
                                                 </div>
                                                 <input type="checkbox" id="btn-modal-eliminar">
                                             </div>
@@ -196,37 +205,39 @@
         </div>
     </div>
 </c:forEach>
-
-<div class="container-modal-eliminar" id="modal-2">
-    <div class="content-modal">
-        <div class="container my-3">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between"></div>
-                <div class="card-body">
-                    <div class="row">
-                        <form id="eliminarForm">
-                            <div class="form-row d-flex justify-content-center">
-                                <label>Seguro que quieres eliminar el articulo: Limpiaparabrisas?</label>
-                            </div>
-                            <br>
-                            <div class="footer">
-                                <div class="col-12 d-flex justify-content-center">
-                                    <div class="mr-3">
-                                        <input type="submit" value="Eliminar Articulo" class="btn btn-primary">
-                                    </div>
+<c:forEach var="articulo" items="${listaArticulos}" varStatus="status">
+    <div class="container-modal-eliminar" id="modal2-${articulo.id_producto}">
+        <div class="content-modal">
+            <div class="container my-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between"></div>
+                    <div class="card-body">
+                        <div class="row">
+                            <form id="eliminarForm" method="post" action="RegistroArticulosServlet">
+                                <div class="form-row d-flex justify-content-center">
+                                    <label>Seguro que quieres cambiar el estado <del></del> articulo: ${articulo.nombre}?</label>
                                 </div>
                                 <br>
+                                <div class="footer">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="mr-3">
+                                            <input type="submit" value="Eliminar Articulo" name="accion" class="btn btn-primary">
+                                            <input type="hidden" value="${articulo.id_producto}" name="id_producto">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </form>
+                            <div class="btn-cerrar">
+                                <button class="btn btn-primary" onclick="cerrarModal('modal2-${articulo.id_producto}')">Cerrar</button>
                             </div>
-                        </form>
-                        <div class="btn-cerrar">
-                            <button class="btn btn-primary" onclick="cerrarModal('modal-2')">Cerrar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</c:forEach>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>

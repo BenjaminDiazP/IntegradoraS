@@ -58,9 +58,6 @@ public class    LoginDao implements DaoRepository{
 
 
 
-
-
-
     public Object findOne(String correo) {
 
         return null;
