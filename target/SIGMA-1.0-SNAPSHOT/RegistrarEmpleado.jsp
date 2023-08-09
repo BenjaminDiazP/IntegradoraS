@@ -20,7 +20,7 @@
         <div class="card-header d-flex justify-content-between">
             <h2>Registro de Empleados</h2>
             <nav>
-                <a href="#" class="nav_link">Regresar</a>
+                <a href="Gerente.jsp" class="nav_link">Regresar</a>
             </nav>
         </div>
         <div class="card-body">
@@ -105,9 +105,9 @@
         <div class="card-body">
             <div class="row">
                 <div class="catalog-container">
-                    <form id="searchForm" action="" method="get">
+                    <form id="searchForm">
                         <div class="search-container">
-                            <input type="search" id="search" name="q" placeholder="Buscar" />
+                            <input type="search" id="search" name="q" placeholder="Buscar"/>
                             <button class="btn btn-primary" type="submit">Buscar</button>
                             <button type="button" id="clearSearch" class="btn btn-danger">X</button>
                         </div>
@@ -124,6 +124,7 @@
                                 <th>Número de Telefono</th>
                                 <th>Direccion</th>
                                 <th>Rol</th>
+                                <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -137,6 +138,15 @@
                                     <td>${empleado.noTelefono}</td>
                                     <td>${empleado.direccion}</td>
                                     <td>${empleado.rol}</td>
+                                    <td><c:choose>
+                                        <c:when test="${empleado.estado == 1}">
+                                            Disponible
+                                        </c:when>
+                                        <c:otherwise>
+                                            No Disponible
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </td>
                                     <td>
                                         <div class="menu-container">
                                             <button class="menu-button" onclick="toggleMenu('menu-${status.index}')">Opciones</button>
@@ -145,15 +155,16 @@
                                                     <!-- Establecemos el ID del botón "Modificar" para abrir el modal correspondiente -->
                                                     <button class="menu-button" onclick="abrirModal('modal-${empleado.id_usuario}')">Modificar</button>
                                                 </div>
-                                                <input type="checkbox" id="btn-modal">
-                                                <button class="menu-button">Eliminar</button>
-                                                <input href="">
+                                                <div class="boton-modal-eliminar">
+                                                    <button class="menu-button" onclick="abrirModal('modal-2${empleado.id_usuario}')">Estado</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -161,30 +172,36 @@
         </div>
     </div>
 </div>
-
-<div class="container-modal-eliminar" id="modal-2">
+<!-- me quede aqui -->
+<c:forEach var="emp1" items="${listaEmpleado}" varStatus="status">
+<div class="container-modal-eliminar" id="modal-2${emp1.id_usuario}">
     <div class="content-modal">
         <div class="container my-3">
             <div class="card">
                 <div class="card-header d-flex justify-content-between"></div>
                 <div class="card-body">
                     <div class="row">
-                        <form id="eliminarForm">
+                        <form id="eliminarForm" action="RegistroServlet" method="post" >
                             <div class="form-row d-flex justify-content-center">
-                                <label>Seguro que quieres eliminar el empleado: Pancho ?</label>
+                                <label>Seguro que quieres cambiar el estado del empleado: ${emp1.nombre}?</label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label></label>
+                                <input type="hidden" class="form-control" name="rfc" required value="${emp1.rfc}">
                             </div>
                             <br>
                             <div class="footer">
                                 <div class="col-12 d-flex justify-content-center">
                                     <div class="mr-3">
-                                        <input type="submit" value="Eliminar Empleado" class="btn btn-primary">
+                                        <input type="submit" value="Cambiar estado" class="btn btn-primary">
+                                        <input type="hidden" value="Estado empleado" name="Registrar" class="btn btn-primary">
                                     </div>
                                 </div>
                                 <br>
                             </div>
                         </form>
                         <div class="btn-cerrar">
-                            <button class="btn btn-primary" onclick="cerrarModal('modal-2')">Cerrar</button>
+                            <button class="btn btn-primary" onclick="cerrarModal('modal-2${emp1.id_usuario}')">Cerrar</button>
                         </div>
                     </div>
                 </div>
@@ -192,87 +209,93 @@
         </div>
     </div>
 </div>
+</c:forEach>
 
-<div class="container-modal" id="modal-4">
-    <div class="content-modal">
+<!-- Modales -->
+<c:forEach var="emp" items="${listaEmpleado}" varStatus="status">
+    <div class="container-modal" id="modal-${emp.id_usuario}">
+        <div class="content-modal">
 
-        <div class="container my-3">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    Modificar Empleado
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <form id="modificarForm">
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" required>
+            <div class="container my-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        Modificar Empleado
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <form id="modificarForm" action="RegistroServlet" method="post">
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control" name="nombre" required value="${emp.nombre}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Apellido Paterno</label>
+                                        <input type="text" class="form-control" name="apellidoPaterno" required value="${emp.apellido1}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Apellido Materno</label>
+                                        <input type="text" class="form-control" name="apellidoMaterno" value="${emp.apellido2}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Dirección</label>
+                                        <input type="text" class="form-control" name="direccion" required value="${emp.direccion}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label></label>
+                                        <input type="hidden" class="form-control" name="rfc" required value="${emp.rfc}">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="apellidoPaterno">Apellido Paterno</label>
-                                    <input type="text" class="form-control" id="apellidoPaterno" required>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <label >Sexo</label>
+                                        <select class="form-control" name="sexo" required value="${emp.sexo}">
+                                            <option value="M">M</option>
+                                            <option value="F">F</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Número Telefónico</label>
+                                        <input type="text" class="form-control" name="telefono" required value="${emp.noTelefono}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Correo Electrónico</label>
+                                        <input type="email" class="form-control" name="correo" required value="${emp.correo}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label >Rol</label>
+                                        <select class="form-control" name="rol">
+                                            <option>${emp.rol}</option >
+                                            <option value="Taller mecanico">Taller mecanico</option >
+                                            <option value="Recepcion">Recepcion</option>
+                                            <option value="Caja">Caja</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="apellidoMaterno">Apellido Materno</label>
-                                    <input type="text" class="form-control" id="apellidoMaterno">
+                                <div class="footer">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <input type="submit" value="Modificar empleado" class="btn btn-primary">
+                                        <input type="hidden" value="Modificar empleado" name = "Registrar" class="btn btn-primary">
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="direccion">Dirección</label>
-                                    <input type="text" class="form-control" id="direccion" required>
-                                </div>
+                            </form>
+                            <div class="btn-cerrar">
+                                <button class="btn btn-primary" onclick="cerrarModal('modal-${emp.id_usuario}')">Cerrar</button>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="sexo">Sexo</label>
-                                    <select class="form-control" id="sexo" required>
-                                        <option value="Masculino">M</option>
-                                        <option value="Femenino">F</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="telefono">Número Telefónico</label>
-                                    <input type="text" class="form-control" id="telefono" required>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="correo">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="correo" required>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <label for="rol">Rol</label>
-                                    <select class="form-control" id="rol" required>
-                                        <option value="Taller mecanico">Taller mecanico</option>
-                                        <option value="Recepcion">Recepcion</option>
-                                        <option value="Caja">Caja</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3">
-                                    <center><label for="imagenM">Imagen</label></center>
-                                    <input type="file" class="form-control" id="imagenM" required accept="image/*">
-                                </div>
-                            </div>
-                            <div class="footer">
-                                <div class="col-12 d-flex justify-content-center">
-                                    <input type="submit" value="Modificar empleado" class="btn btn-primary">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="btn-cerrar">
-                            <button class="btn btn-primary" onclick="cerrarModal('modal-4')">Cerrar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</c:forEach>
 
 <c:choose>
     <c:when test="${not empty mensajeError}">
         <script>
             swal({
                 title: "Error de registro!",
-                text: "Hubo un error al insertar el cliente en la base de datos.",
+                text: "Hubo un error al insertar el Empleado en la base de datos.",
                 icon: "error",
             });
             // Elimina el atributo de sesión después de mostrar el mensaje
@@ -292,6 +315,21 @@
             });
             // Elimina el atributo de sesión después de mostrar el mensaje
             <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorUpdate}">
+        <script>
+            swal({
+                title: "Error de registro!",
+                text: "Hubo un error al modificar el Empleado en la base de datos.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorUpdate" scope="session" />
             // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
             setTimeout(function() {
                 location.reload();

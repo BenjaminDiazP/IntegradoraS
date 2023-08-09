@@ -17,6 +17,7 @@ public class Usuario {
     private String contrasenia;
     private String codigo;
     private int identificador;
+    private int estado;
 
     public Usuario( String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo,int identificador) {this.id_usuario = id_usuario;
         this.nombre = nombre;
@@ -33,6 +34,18 @@ public class Usuario {
         this.codigo = codigo;
         this.identificador = identificador;
 
+    }
+
+    public Usuario(String rfc,String rol, String nombre, String apellido1, String apellido2, String direccion, String sexo, String noTelefono, String correo) {this.id_usuario = id_usuario;
+        this.rfc = rfc;
+        this.rol = rol;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
     }
 
 
@@ -158,7 +171,15 @@ public class Usuario {
         this.identificador = identificador;
     }
 
-    public Usuario(String rol, String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo,int identificador) {
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public Usuario(String rol, String nombre, String apellido1, String apellido2, String rfc, String curp, String direccion, String sexo, String noTelefono, String correo, String fechaNac, String contrasenia, String codigo, int identificador) {
         this.rol = rol;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -204,6 +225,16 @@ public class Usuario {
         this.fechaNac = fechaNac;
         this.codigo = codigo;
         this.contrasenia = contrasenia;
+    }
+    public Usuario(String nombre, String apellido1, String apellido2, String rfc, String direccion, String sexo, String noTelefono, String correo) {
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.rfc = rfc;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
     }
 
 

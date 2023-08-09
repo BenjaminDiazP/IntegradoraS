@@ -12,6 +12,7 @@ function cerrarModal(modalId) {
     const modal = document.getElementById(modalId);
     modal.style.display = "none";
 }
+
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("search");
 const clearButton = document.getElementById("clearSearch");
@@ -35,6 +36,7 @@ function buscarArticulos() {
     clearButton.style.display = filtro !== "" ? "block" : "none";
 }
 
+//fdsfsdfsdfd
 searchForm.addEventListener("submit", function (event) {
     event.preventDefault();
     buscarArticulos();
@@ -60,3 +62,23 @@ function showAllProducts() {
         product.style.display = "table-row";
     });
 }
+
+document.getElementById('precio').addEventListener('input', function () {
+    var precioInput = document.getElementById('precio');
+    var precioValue = parseFloat(precioInput.value);
+
+    if (precioValue < 0) {
+        alert('No se permiten números negativos en el campo Precio.');
+        precioInput.value = '';
+    }
+});
+
+document.getElementById('stock').addEventListener('input', function () {
+    var cantidadInput = document.getElementById('stock');
+    var cantidadValue = parseFloat(cantidadInput.value);
+
+    if (cantidadValue < 0) {
+        alert('No se permiten números negativos en el campo Cantidad.');
+        cantidadInput.value = '';
+    }
+});
