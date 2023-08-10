@@ -54,14 +54,20 @@
                     </div>
                     <div id="moreInfo" class="collapse mt-3">
                         <p><strong>Estás a punto de cambiar tu contraseña o correo</strong></p>
-                        <!--///////////////////////////////////////////////////////////////-->
-
-
-
-
-                        <!--///////////////////////////////////////////////////////////////-->
-                        <p><a href="#" class="btn btn-primary">Cambiar contraseña</a></p>
-                        <p><a href="#" class="btn btn-primary">Cambiar correo</a></p>
+                        <!-- Aquí puedes agregar más información sobre el gerente -->
+                        <div class="menu-container">
+                            <div class="boton-modal">
+                                <button class="btn btn-primary" onclick="abrirModal('modal-1')">Modificar
+                                    contraseña</button>
+                            </div>
+                            <input type="checkbox" id="btn-modal">
+                            <br>
+                            <div class="boton-modal">
+                                <button class="btn btn-primary" onclick="abrirModal('modal-2')">Modificar
+                                    correo</button>
+                            </div>
+                            <input type="checkbox" id="btn-modal">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,11 +183,78 @@
     </div>
 </div>
 
+<!--Agrego modal de cambiar contrasena-->
+<div class="container-modal" id="modal-1">
+    <div class="content-modal">
+        <div class="container my-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h2>Cambiar contraseña</h2>
+                </div>
+                <form id="cambio-contrasenia-Form">
+                    <div class="form-row d-flex justify-content-center">
+                        <div class="form-group col-md-6">
+                            <label for="contra1">Ingresa tu nueva contraseña</label>
+                            <input type="text" class="form-control" id="contra1" required>
+                            <label for="contra2">Repite tu contraseña</label>
+                            <input type="text" class="form-control" id="contra2" required>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="col-12 d-flex justify-content-center">
 
+                            <div>
+                                <input type="submit" value="Cambiar contraseña" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="btn-cerrar">
+                    <button class="btn btn-primary" onclick="cerrarModal('modal-1')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--el segundo modal-->
+<div class="container-modal" id="modal-2">
+    <div class="content-modal">
+        <div class="container my-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h2>Cambiar correo</h2>
+                </div>
+                <form id="cambio-correo-Form">
+                    <div class="form-row d-flex justify-content-center">
+                        <div class="form-group col-md-6">
+                            <label for="correo1">Ingresa tu nuevo correo</label>
+                            <input type="text" class="form-control" id="correo1" required>
+                            <label for="correo2">Repite tu correo</label>
+                            <input type="text" class="form-control" id="correo2" required>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="col-12 d-flex justify-content-center">
+
+                            <div>
+                                <input type="submit" value="Cambiar correo" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="btn-cerrar">
+                    <button class="btn btn-primary" onclick="cerrarModal('modal-2')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------------------->
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="assets/js/jsArticulos/scriptMenu.js"></script>
+<script src="assets/js/jsRegistrarEU/scriptMenu.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

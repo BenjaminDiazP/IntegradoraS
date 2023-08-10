@@ -37,14 +37,16 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = connection.connect();
         try{
             PreparedStatement stmt = con.prepareStatement(
-                    "insert into Producto(nombre,costo,categoria,stock,imagen)"+
-                            "values(?,?,?,?,?)"
+                    "insert into Producto(nombre,costo,categoria,stock,imagen,estado)"+
+                            "values(?,?,?,?,?,?)"
             );
             stmt.setString(1,art.getNombre());
             stmt.setString(2, String.valueOf(art.getCosto()));
             stmt.setString(3,art.getCategoria());
             stmt.setString(4, String.valueOf(art.getStock()));
             stmt.setBlob(5, imageBytes);
+            stmt.setInt(6,1);
+
             if(stmt.executeUpdate() > 0){
                 return true;
             }

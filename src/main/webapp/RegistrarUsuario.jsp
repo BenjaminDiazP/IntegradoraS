@@ -82,8 +82,9 @@
                                 <input type="hidden" value="Agregar usuario" name="Registrar" class="btn btn-primary">
                             </div>
                             <div class="custom-div">
-                                <a href="RegistrarAuto.jsp" type="submit" class="btn btn-primary">Siguiente</a>
+                                <a href="RegistroVehiculoServlet?tipo=Vehiculo" class="btn btn-primary">Siguiente</a>
                             </div>
+
                         </div>
                     </div>
                 </form>

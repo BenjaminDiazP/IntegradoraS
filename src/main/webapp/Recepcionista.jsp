@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel de Recepcionista</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/cssRecepcionista/styles.css">
+    <link rel="stylesheet" href="assets/css/cssGerente/styles.css">
 </head>
 
 <body>
@@ -58,8 +58,19 @@
                     <div id="moreInfo" class="collapse mt-3">
                         <p><strong>Estás a punto de cambiar tu contraseña o correo</strong></p>
                         <!-- Aquí puedes agregar más información sobre el gerente -->
-                        <p><a href="#" class="btn btn-primary mb-2">Cambiar contraseña</a></p>
-                        <p><a href="#" class="btn btn-primary">Cambiar correo</a></p>
+                        <div class="menu-container">
+                            <div class="boton-modal">
+                                <button class="btn btn-primary" onclick="abrirModal('modal-1')">Modificar
+                                    contraseña</button>
+                            </div>
+                            <input type="checkbox" id="btn-modal">
+                            <br>
+                            <div class="boton-modal">
+                                <button class="btn btn-primary" onclick="abrirModal('modal-2')">Modificar
+                                    correo</button>
+                            </div>
+                            <input type="checkbox" id="btn-modal">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,9 +113,76 @@
         </div>
     </div>
 </div>
+<!-- Inician los modales de cambio de correo y contra-->
+<div class="container-modal" id="modal-1">
+    <div class="content-modal">
+        <div class="container my-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h2>Cambiar contraseña</h2>
+                </div>
+                <form id="cambio-contrasenia-Form">
+                    <div class="form-row d-flex justify-content-center">
+                        <div class="form-group col-md-6">
+                            <label for="contra1">Ingresa tu nueva contraseña</label>
+                            <input type="text" class="form-control" id="contra1" required>
+                            <label for="contra2">Repite tu contraseña</label>
+                            <input type="text" class="form-control" id="contra2" required>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="col-12 d-flex justify-content-center">
 
+                            <div>
+                                <input type="submit" value="Cambiar contraseña" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="btn-cerrar">
+                    <button class="btn btn-primary" onclick="cerrarModal('modal-1')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Segundo modal-->
+<div class="container-modal" id="modal-2">
+    <div class="content-modal">
+        <div class="container my-3">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h2>Cambiar correo</h2>
+                </div>
+                <form id="cambio-correo-Form">
+                    <div class="form-row d-flex justify-content-center">
+                        <div class="form-group col-md-6">
+                            <label for="correo1">Ingresa tu nuevo correo</label>
+                            <input type="text" class="form-control" id="correo1" required>
+                            <label for="correo2">Repite tu correo</label>
+                            <input type="text" class="form-control" id="correo2" required>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="col-12 d-flex justify-content-center">
+
+                            <div>
+                                <input type="submit" value="Cambiar correo" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="btn-cerrar">
+                    <button class="btn btn-primary" onclick="cerrarModal('modal-2')">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Segundo modal-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="assets/js/jsRegistrarEU/scriptMenu.js"></script>
 </body>
 
 </html>

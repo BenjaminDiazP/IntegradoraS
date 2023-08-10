@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -50,6 +51,12 @@ public class RegistroServlet extends HttpServlet {
         if (accion.equals("Agregar usuario")) {
             req.getSession().removeAttribute("mensajeError");
             boolean envio = dao.insertCliente(new Usuario(nombre, apellido1, apellido2, rfc, curp, direccion, sexo, noTelefono, correo, fechaNac, contrasenia, codigo));
+            //////////////////Jalar el id del cliente al automovil//////////////////////////////
+            int clienteID = dao.getUltimoIdCliente(); // aqui debo de obtener el ultimo id del cliente que se ingreso
+            HttpSession session = req.getSession();
+            session.setAttribute("clienteID", clienteID);
+            System.out.println(clienteID);
+            ////////////////////////////////////////////////
             if (envio != false){
                 SendEmail mail = new SendEmail();
                 try{
@@ -175,6 +182,7 @@ public class RegistroServlet extends HttpServlet {
 
                 req.getSession().setAttribute("listaCliente", listaCliente);
                 req.getRequestDispatcher("RegistrarUsuario.jsp").forward(req, resp);
+
             } else {
                 // Manejar el caso en el que el valor de "tipo" no sea "empleado" ni "cliente"
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tipo de solicitud inválido");
