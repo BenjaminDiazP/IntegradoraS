@@ -462,6 +462,34 @@ public class RegistroDao implements DaoRepository {
     }
 
 
+    public int getUltimoIdCliente() {
+        int ultimoId = 0;
+        MySqlConector connection = new MySqlConector();
+        Connection con = connection.connect();
+
+        try {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT idcliente FROM Cliente ORDER BY idcliente DESC LIMIT 1"
+            );
+
+            ResultSet res = stmt.executeQuery();
+
+            if (res.next()) {
+                ultimoId = res.getInt("idcliente");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ultimoId;
+    }
+
+
+
+
+
+
+
 
 
 
