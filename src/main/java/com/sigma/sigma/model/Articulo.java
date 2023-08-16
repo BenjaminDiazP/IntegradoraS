@@ -4,7 +4,7 @@ public class Articulo {
 
     private int id_producto;
     private String nombre;
-    private Double costo;
+    private Float costo;
     private String categoria;
     private int stock;
     private int identificador;
@@ -19,7 +19,7 @@ public class Articulo {
         this.identificador = identificador;
     }
 
-    public Articulo(int id_producto, String nombre, double costo, String categoria, int stock) {
+    public Articulo(int id_producto, String nombre, Float costo, String categoria, int stock) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.costo = costo;
@@ -27,7 +27,7 @@ public class Articulo {
         this.stock = stock;
 
     }
-    public Articulo(int id_producto, String nombre, double costo, String categoria, int stock,int estado) {
+    public Articulo(int id_producto, String nombre, Float costo, String categoria, int stock,int estado) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.costo = costo;
@@ -60,11 +60,11 @@ public class Articulo {
         this.nombre = nombre;
     }
 
-    public Double getCosto() {
+    public Float getCosto() {
         return costo;
     }
 
-    public void setCosto(Double costo) {
+    public void setCosto(Float costo) {
         this.costo = costo;
     }
 
@@ -92,7 +92,7 @@ public class Articulo {
         this.estado = estado;
     }
 
-    public Articulo(String nombre, Double costo, String categoria, int stock) {
+    public Articulo(String nombre, Float costo, String categoria, int stock) {
         this.nombre = nombre;
         this.costo = costo;
         this.categoria = categoria;

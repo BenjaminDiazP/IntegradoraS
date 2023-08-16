@@ -236,6 +236,17 @@ public class Usuario {
         this.noTelefono = noTelefono;
         this.correo = correo;
     }
+    public Usuario(int id_usuario,String nombre, String apellido1, String apellido2, String rfc, String direccion, String sexo, String noTelefono, String correo) {
+        this.id_usuario = id_usuario;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.rfc = rfc;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.noTelefono = noTelefono;
+        this.correo = correo;
+    }
 
 
     public Usuario(){

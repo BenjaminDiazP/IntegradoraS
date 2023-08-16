@@ -50,6 +50,24 @@
 </c:if>
 
 
+<c:choose>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Cambio de contraseña  Existoso!",
+                text: "Se ha cambiado correctamente la contraseña.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
+
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 
 </body>

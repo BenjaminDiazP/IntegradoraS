@@ -74,7 +74,7 @@ public class RegistroArticulosDao implements DaoRepository {
                 art.setIdentificador(randomNum);
                 art.setId_producto(res.getInt(1));
                 art.setNombre(res.getString("nombre"));
-                art.setCosto(res.getDouble("costo"));
+                art.setCosto(res.getFloat("costo"));
                 art.setCategoria(res.getString("categoria"));
                 art.setStock(res.getInt("stock"));
                 art.setEstado(res.getInt("Estado"));
@@ -100,7 +100,7 @@ public class RegistroArticulosDao implements DaoRepository {
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND categoria = 'Producto'" +
-                            "AND estado == 1 AND cantidad == 1"
+                            "AND Estado = 1 AND stock >= 1"
             );
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
@@ -110,7 +110,7 @@ public class RegistroArticulosDao implements DaoRepository {
                 art.setIdentificador(randomNum);
                 art.setId_producto(res.getInt(1));
                 art.setNombre(res.getString("nombre"));
-                art.setCosto(res.getDouble("costo"));
+                art.setCosto(res.getFloat("costo"));
                 art.setCategoria(res.getString("categoria"));
                 art.setStock(res.getInt("stock"));
                 byte[] image = res.getBytes("Imagen");
@@ -135,7 +135,7 @@ public class RegistroArticulosDao implements DaoRepository {
         try {
             PreparedStatement stmt = con.prepareStatement(
                     "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND categoria = 'Servicio'" +
-                            "AND estado == 1 AND cantidad == 1"
+                            "AND Estado = 1 AND stock >= 1"
             );
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
@@ -145,7 +145,7 @@ public class RegistroArticulosDao implements DaoRepository {
                 art.setIdentificador(randomNum);
                 art.setId_producto(res.getInt(1));
                 art.setNombre(res.getString("nombre"));
-                art.setCosto(res.getDouble("costo"));
+                art.setCosto(res.getFloat("costo"));
                 art.setCategoria(res.getString("categoria"));
                 art.setStock(res.getInt("stock"));
                 byte[] image = res.getBytes("Imagen");

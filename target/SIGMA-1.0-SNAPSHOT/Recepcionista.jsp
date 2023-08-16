@@ -7,8 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Panel de Recepcionista</title>
+    <link rel="icon" href="assets/img/imagesPaginaPrincipal/logo.ico">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/cssGerente/styles.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -37,9 +39,6 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="info-row d-flex">
-                                <p><strong>Edad:</strong> <span id="edadEmpleado"></span></p>
-                            </div>
                             <div class="info-row d-flex">
                                 <p><strong>Email: ${correo}</strong> <span id="emailEmpleado"></span></p>
                             </div>
@@ -84,7 +83,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card mb-3">
-                        <a href="RegistrarUsuario.jsp" class="funcion">
+                        <a href="RegistroServlet?tipo=cliente" class="funcion">
                             <div class="card-body">
                                 <h4 class="card-title">Registrar Cliente</h4>
                                 <p class="card-text"></p>
@@ -96,9 +95,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card mb-3">
-                        <a href="#" class="funcion">
+                        <a href="MantenimientoServlet?tipo=inicio" class="funcion">
                             <div class="card-body">
-                                <h4 class="card-title">Consultar Cliente</h4>
+                                <h4 class="card-title">Mantenimiento</h4>
                                 <p class="card-text"></p>
                             </div>
                         </a>
@@ -121,13 +120,17 @@
                 <div class="card-header d-flex justify-content-between">
                     <h2>Cambiar contraseña</h2>
                 </div>
-                <form id="cambio-contrasenia-Form">
+                <form id="cambio-contrasenia-Form" method="post" action="CambiarContraCorreoECServlet">
                     <div class="form-row d-flex justify-content-center">
                         <div class="form-group col-md-6">
-                            <label for="contra1">Ingresa tu nueva contraseña</label>
-                            <input type="text" class="form-control" id="contra1" required>
-                            <label for="contra2">Repite tu contraseña</label>
-                            <input type="text" class="form-control" id="contra2" required>
+                            <label >Ingresa tu nueva contraseña</label>
+                            <input type="text" class="form-control" name="nuevacontra" required>
+                            <label >Repite tu contraseña</label>
+                            <input type="text" class="form-control" name="nuevacontrac" required>
+                            <label ></label>
+                            <input type="hidden" class="form-control" name="correo" required value="${correo}">
+                            <label ></label>
+                            <input type="hidden" class="form-control" name="rol" required value="${tipoSesion}">
                         </div>
                     </div>
                     <div class="footer">
@@ -135,6 +138,7 @@
 
                             <div>
                                 <input type="submit" value="Cambiar contraseña" class="btn btn-primary">
+                                <input type="hidden" value="Cambiar contrasenia" name="accion" class="btn btn-primary">
                             </div>
                         </div>
                     </div>
@@ -154,13 +158,15 @@
                 <div class="card-header d-flex justify-content-between">
                     <h2>Cambiar correo</h2>
                 </div>
-                <form id="cambio-correo-Form">
+                <form id="cambio-correo-Form" method="post" action="CambiarContraCorreoECServlet">
                     <div class="form-row d-flex justify-content-center">
                         <div class="form-group col-md-6">
-                            <label for="correo1">Ingresa tu nuevo correo</label>
-                            <input type="text" class="form-control" id="correo1" required>
-                            <label for="correo2">Repite tu correo</label>
-                            <input type="text" class="form-control" id="correo2" required>
+                            <label >Ingresa tu nuevo correo</label>
+                            <input type="text" class="form-control" name="correonuevo" required>
+                            <label >Repite tu correo</label>
+                            <input type="text" class="form-control" name="correonuevoc" required>
+                            <label ></label>
+                            <input type="hidden" class="form-control" name="rol" required value="${tipoSesion}">
                         </div>
                     </div>
                     <div class="footer">
@@ -168,6 +174,7 @@
 
                             <div>
                                 <input type="submit" value="Cambiar correo" class="btn btn-primary">
+                                <input type="hidden" value="Cambiar correo" name="accion" class="btn btn-primary">
                             </div>
                         </div>
                     </div>
@@ -180,6 +187,95 @@
     </div>
 </div>
 <!-- Segundo modal-->
+
+
+<c:choose>
+    <c:when test="${not empty mensajeErrorNoseActualizocontrasenia}">
+        <script>
+            swal({
+                title: "Error de contraseñas!",
+                text: "La contrasenia no se actualizo.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorNoseActualizocontrasenia" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorContrasenias}">
+        <script>
+            swal({
+                title: "Error de contraseñas!",
+                text: "Las contraseñas no coinciden.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorContrasenias" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorCambioCorreo}">
+        <script>
+            swal({
+                title: "Error de correo!",
+                text: "No se logro actualizar el correo.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorCambioCorreo" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorNoCoincideCorreo}">
+        <script>
+            swal({
+                title: "Error de correo!",
+                text: "No coinciden los correos.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorNoCoincideCorreo" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Cambio Existoso!",
+                text: "Se a actualizado correctamente.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
+
+
+
+
+
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="assets/js/jsRegistrarEU/scriptMenu.js"></script>

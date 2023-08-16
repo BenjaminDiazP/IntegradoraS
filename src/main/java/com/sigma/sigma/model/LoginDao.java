@@ -18,12 +18,13 @@ public class    LoginDao implements DaoRepository{
 // Juan Pedroza
     @Override
     public Object findOne(int id , String rol) { return null;} // modifique esto agre el rol aqui y en el DaoRepository
+
     public Usuario findOne(String correo, String contra) {
         Usuario usuario = null;
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT * FROM empleado WHERE Correo = ? AND Contrasenia = SHA2(?, 224)");
+                    "SELECT * FROM Empleado WHERE Correo = ? AND Contrasenia = SHA2(?, 224)");
             stmt.setString(1, correo);
             stmt.setString(2, contra);
             ResultSet res = stmt.executeQuery();
@@ -45,9 +46,13 @@ public class    LoginDao implements DaoRepository{
                 res = stmt.executeQuery();
 
                 if (res.next()) {
+
                     usuario = new Usuario();
                     usuario.setId_usuario(res.getInt("idcliente"));
-                    usuario.setRol(res.getString("nombre"));
+                    usuario.setRol(res.getString("Nombre"));
+                    usuario.setCorreo(res.getString("Correo"));
+                    usuario.setApellido1(res.getString("Apellido1"));
+                    usuario.setApellido2(res.getString("Apellido2"));
                 }
             }
         } catch (SQLException e) {

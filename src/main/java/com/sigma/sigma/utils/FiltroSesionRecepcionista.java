@@ -8,7 +8,8 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {
         "/Recepcionista.jsp",
-        "/RegistrarUsuario.jsp"
+        "/RegistrarUsuario.jsp",
+        "/RegistrarAuto.jsp"
 })
 public class FiltroSesionRecepcionista implements Filter {
 
@@ -30,16 +31,22 @@ public class FiltroSesionRecepcionista implements Filter {
 
         // Check if the user is a recepcionista (assuming isRecepcionista is a boolean session attribute)
         boolean isRecepcionista = false;
-        if (session != null) {
+
+        if(session != null){
+
             if (session.getAttribute("tipoSesion") != null) {
+                System.out.println(session.getAttribute("tipoSesion"));
+                String op = session.getAttribute("tipoSesion").toString(); // is true Nombre
                 isRecepcionista = session.getAttribute("tipoSesion").equals("Recepcionista");
             }
+
         }
 
         // Check if the requested page is allowed for shared access
-        boolean paginaPermitida = "/RegistrarUsuario.jsp".equals(httpRequest.getServletPath());
 
-        if (isRecepcionista || paginaPermitida) {
+
+
+        if (isRecepcionista) {
             // If the user is a recepcionista or the page is allowed for shared access, allow access to the Servlet
             chain.doFilter(request, response);
         } else {

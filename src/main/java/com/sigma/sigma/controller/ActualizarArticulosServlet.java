@@ -17,7 +17,7 @@ public class ActualizarArticulosServlet  extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int idProducto = Integer.parseInt(req.getParameter("id_producto"));
         String nombre = req.getParameter("nombre");
-        double costo = Double.parseDouble(req.getParameter("costo"));
+        Float costo = Float.parseFloat(req.getParameter("costo"));
         String categoria = req.getParameter("categoria");
         int stock = Integer.parseInt(req.getParameter("stock"));
         System.out.println(idProducto);

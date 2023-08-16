@@ -8,6 +8,7 @@ import com.sigma.sigma.utils.Send;
 import com.sigma.sigma.utils.SendEmail;
 
 import javax.mail.MessagingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +18,10 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Random;
 
@@ -46,6 +49,9 @@ public class RegistroServlet extends HttpServlet {
         String contrasenia = generarCadenaAleatoria(longitudContrasenia, caracteres);
         String codigo = generarCadenaAleatoria(longitudCodigo, caracteres);
         String accion = req.getParameter("Registrar"); // esto lo cambie estaba como
+        String nuevacontrasenia = req.getParameter("nuevacontrasenia");
+        String nuevacontraseniaconfirmacion = req.getParameter("nuevacontraseniaconfirmacion");
+        String codigosec =req.getParameter("codigoS");
 
 
         if (accion.equals("Agregar usuario")) {
@@ -161,6 +167,65 @@ public class RegistroServlet extends HttpServlet {
                 default:
                     resp.sendRedirect("RegistroServlet");
             }
+
+        }else if (accion.equals("Reestablecer Contrasenia E")){
+            System.out.println("ingreso para cambiar la contrasenia");
+            RegistroDao dao1 = new RegistroDao();
+
+            boolean correoregistradoE = dao1.BuscarCorreoEmpleado(correo);
+
+            if(correoregistradoE){
+                String newCodeE = dao1.generadorCodigoEmpleado();
+
+                dao1.UpdateCodigoEmpleado(correo,newCodeE);
+
+                String codigoreestablecimiento = dao1.ObtenerCodigoRestablecimientoEmpleado(correo);
+
+                if(codigoreestablecimiento != null){
+                    dao1.EnviarCodigoPorCorreo(correo,codigoreestablecimiento);
+
+                    resp.sendRedirect("IngresarCodigoRecuperacionContra.jsp?correo=" + URLEncoder.encode(correo,"UTF-8"));
+
+                }else{
+                    req.getSession().setAttribute("mensajeError", "Hubo un error al obtener el codigo de seguriad");
+                    resp.sendRedirect("Recuperacion.jsp");
+                }
+
+            }else {
+                System.out.println("Esta entrando para mandar el mensaje de error");
+                req.getSession().setAttribute("mensajeError", "El correo electrónico no está registrado");
+                resp.sendRedirect("Recuperacion.jsp");
+            }
+
+        }else if(accion.equals("ComprobarCodigoSec")){
+
+            RegistroDao dao1 = new RegistroDao();
+
+            String codigoalmacenado = dao1.ObtenerCodigoRestablecimientoEmpleado(correo);
+
+            if (codigoalmacenado.equals(codigosec)){
+                resp.sendRedirect("ReestablecerContraEC.jsp?correo=" + URLEncoder.encode(correo,"UTF-8"));
+            }else{
+                req.getSession().setAttribute("mensajeError", "El codigo no coincide");
+                resp.sendRedirect("IngresarCodigoRecuperacionContra.jsp?correo=" + URLEncoder.encode(correo,"UTF-8"));
+            }
+
+        }else if (accion.equals("Cambiar Contrasenia")) {
+            RegistroDao dao1 = new RegistroDao();
+            if (nuevacontrasenia.equals(nuevacontraseniaconfirmacion)) {
+                System.out.println("Entro aqui para actualizar la contrasenia");
+                boolean contraactualizada = dao1.UpdateContraseniaEmpleado(correo, nuevacontrasenia);
+                if (contraactualizada) {
+                    System.out.println("Entro aqui para mandar el mensaje de exito");
+                    req.getSession().setAttribute("mensajeExito", "Cambio Fue exitoso");
+                    resp.sendRedirect("InicioSesion.jsp");
+                    return; // Importante: detener la ejecución aquí para evitar más procesamiento.
+                }
+            }
+            System.out.println("Entro aqui para mandar el errorrrrrrr");
+            req.getSession().setAttribute("mensajeError", "Las contraseñas no coinciden");
+            resp.sendRedirect("ReestablecerContraEC.jsp?correo=" + URLEncoder.encode(correo, "UTF-8"));
+
         }
 
     }
