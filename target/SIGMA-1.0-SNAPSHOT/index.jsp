@@ -30,9 +30,6 @@
         </label>
         <nav class="navbar">
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Servicios</a></li>
-                <li><a href="#">Productos</a></li>
                 <li><a href="InicioSesion.jsp">Iniciar Sesion</a></li>
             </ul>
         </nav>
