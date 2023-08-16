@@ -8,7 +8,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/Mecanico.jsp"
+        "/Mecanico.jsp",
+        "/Mantenimiento.jsp"
 })
 public class FiltroSesionMecanico implements Filter {
 

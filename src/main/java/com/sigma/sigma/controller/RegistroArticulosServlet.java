@@ -22,12 +22,12 @@ public class RegistroArticulosServlet extends HttpServlet {
 private Part imagen;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("ENTRO AQUI");
         String accion = req.getParameter("accion");
 
         if(accion.equals("AgregarArticulo")){
             String nombre = req.getParameter("nombre");
-            Double costo = Double.valueOf(req.getParameter("costo"));
+            Float costo = Float.parseFloat(req.getParameter("costo"));
             String categoria = req.getParameter("categoria");
             int stock = Integer.parseInt(req.getParameter("stock"));
             imagen = req.getPart("imagen");
@@ -38,9 +38,10 @@ private Part imagen;
             if(resultado){
                 List<Articulo> listaArticulos = dao.getAllArticulos();
                 req.getSession().setAttribute("listaArticulos", listaArticulos);
-                resp.sendRedirect("/RegistroArticulosServlet?tipo=articulos");
+                req.getSession().setAttribute("mensajeExito", "Exito al registrar el producto");
+                resp.sendRedirect("RegistroArticulosServlet?tipo=articulos");
             }
-        }else if (accion.equals("Eliminar Articulo")) {
+        }else if (accion.equals("Cambiar estado")) {
             RegistroArticulosDao dao = new RegistroArticulosDao();
             int id = Integer.parseInt(req.getParameter("id_producto"));
             System.out.println(id);
@@ -63,14 +64,14 @@ private Part imagen;
         if(tipo.equals("articulos")){
             List<Articulo> listaArticulos = dao1.getAllArticulos();
             req.getSession().setAttribute("listaArticulos", listaArticulos);
-            System.out.println(listaArticulos.get(1).getEstado());
             req.getRequestDispatcher("RegistroArticulos.jsp").forward(req,resp);
         }else if(tipo.equals("paquetes")){
             List<Articulo> listaProductos = dao1.getAllArticulosProductos();
             List<Articulo> listaServicios = dao1.getAllArticulosServicios();
+            System.out.println(listaServicios);
             req.getSession().setAttribute("listaProductos", listaProductos);
             req.getSession().setAttribute("listaServicios", listaServicios);
-            req.getRequestDispatcher("RegistrarPaquetes.jsp").forward(req,resp);
+            resp.sendRedirect("RegistroPaquetesServlet");
         }
 
 

@@ -23,6 +23,6 @@ public class LogoutServlet extends HttpServlet{
         if (session != null) {
             session.invalidate(); // finaliza la sesión
         }
-        response.sendRedirect("InicioSesion.jsp"); // redirige al usuario a la página de inicio de sesión
+        response.sendRedirect("index.jsp"); // redirige al usuario a la página de inicio de sesión
     }
 }

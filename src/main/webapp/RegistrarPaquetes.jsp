@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registrar Paquete</title>
+  <link rel="icon" href="assets/img/imagesPaginaPrincipal/logo.ico">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -18,7 +19,7 @@
     <div class="card-header d-flex justify-content-between">
       <h2>Catálogo de paquetes</h2>
       <nav>
-        <a href="" class="nav_link">Regresar</a>
+        <a href="Gerente.jsp" class="nav_link">Regresar</a>
       </nav>
     </div>
 

@@ -6,9 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Articulos</title>
+    <link rel="icon" href="assets/img/imagesPaginaPrincipal/logo.ico">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/cssRegistroEU/cssRegistroEU.css" type="text/css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -129,7 +131,7 @@
 
                                                 <div class="boton-modal-eliminar">
                                                     <button class="menu-button"
-                                                            onclick="abrirModal('modal2-${articulo.id_producto}')">Eliminar</button>
+                                                            onclick="abrirModal('modal2-${articulo.id_producto}')">Estado</button>
                                                 </div>
                                                 <input type="checkbox" id="btn-modal-eliminar">
                                             </div>
@@ -221,7 +223,7 @@
                                 <div class="footer">
                                     <div class="col-12 d-flex justify-content-center">
                                         <div class="mr-3">
-                                            <input type="submit" value="Eliminar Articulo" name="accion" class="btn btn-primary">
+                                            <input type="submit" value="Cambiar estado" name="accion" class="btn btn-primary">
                                             <input type="hidden" value="${articulo.id_producto}" name="id_producto">
                                         </div>
                                     </div>
@@ -238,6 +240,26 @@
         </div>
     </div>
 </c:forEach>
+
+
+
+<c:choose>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Registro de articulo Existoso!",
+                text: "Se ha registrado correctamen el articulo.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>

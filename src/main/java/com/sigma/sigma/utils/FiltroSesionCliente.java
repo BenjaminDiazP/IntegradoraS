@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {
-        "/Cliente.jsp"
+        "/Cliente.jsp",
+        "/HistorialMantenimientoCl.jsp",
+        "/HistorialComprascl.jsp"
 })
 public class FiltroSesionCliente implements Filter {
 
@@ -29,6 +31,7 @@ public class FiltroSesionCliente implements Filter {
         HttpSession session = httpRequest.getSession(false);
 
         // Check if the user is an admin(assuming isAdmin is a boolean session attribute)
+         // Compare the value with "Cliente"
         boolean isAdmin = false;
         if(session != null){
 

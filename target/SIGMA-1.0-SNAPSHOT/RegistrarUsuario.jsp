@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Cliente</title>
+    <link rel="icon" href="assets/img/imagesPaginaPrincipal/logo.ico">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -20,7 +21,14 @@
         <div class="card-header d-flex justify-content-between">
             <h2>Registro de Cliente</h2>
             <nav>
-                <a href="Gerente.jsp" class="nav_link">Regresar</a>
+                <c:choose>
+                    <c:when test="${tipoSesion == 'Gerente'}">
+                        <a href="Gerente.jsp" class="nav_link">Regresar</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="Recepcionista.jsp" class="nav_link">Regresar</a>
+                    </c:otherwise>
+                </c:choose>
             </nav>
         </div>
         <div class="card-body">
