@@ -45,7 +45,7 @@ public class RegistroVehiculoDao implements DaoRepository {
         Connection con = connection.connect();
         try{
             PreparedStatement stmt = con.prepareStatement(
-                    "insert into Vehiculo(Noserie,id_cliente,Marca,Modelo,Color,TipoCombustible,Placas,TipoTransmision,NoMotor,Tipo,imagen,FechaRegistro,Estado)"+
+                    "insert into Vehiculo(NoSerie,id_cliente,Marca,Modelo,Color,TipoCombustible,Placas,TipoTransmision,NoMotor,Tipo,Imagen,FechaRegistro,Estado)"+
                             "values(?,?,?,?,?,?,?,?,?,?,?,?,?)"
             );
             stmt.setString(1, Veh.getNoSerie());

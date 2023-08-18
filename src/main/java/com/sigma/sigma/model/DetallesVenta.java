@@ -1,22 +1,26 @@
 package com.sigma.sigma.model;
 import java.util.Date;
+import java.util.List;
 
 public class DetallesVenta {
-    private int idProductoVenta;
+    private String nombreApellidoCliente;
     private int idCliente;
-    private int idProducto;
-    private Date fecha;
-    private float total;
+    private double totalSuma;
     private String tipoPago;
-    private  int id_empleado;
+    private int idTablaPedido;
+    private String correo;
+    private String nombreApellidoEmpleado;
+    private String matricula;
+    private String fecha;
+    private List<Articulo> listaDeProductos;
 
 
-    public int getIdProductoVenta() {
-        return idProductoVenta;
+    public String getNombreApellidoCliente() {
+        return nombreApellidoCliente;
     }
 
-    public void setIdProductoVenta(int idProductoVenta) {
-        this.idProductoVenta = idProductoVenta;
+    public void setNombreApellidoCliente(String nombreApellidoCliente) {
+        this.nombreApellidoCliente = nombreApellidoCliente;
     }
 
     public int getIdCliente() {
@@ -27,28 +31,12 @@ public class DetallesVenta {
         this.idCliente = idCliente;
     }
 
-    public int getIdProducto() {
-        return idProducto;
+    public double getTotalSuma() {
+        return totalSuma;
     }
 
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public float getTotal() {
-        return total;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
+    public void setTotalSuma(double totalSuma) {
+        this.totalSuma = totalSuma;
     }
 
     public String getTipoPago() {
@@ -59,24 +47,67 @@ public class DetallesVenta {
         this.tipoPago = tipoPago;
     }
 
-    public int getId_empleado() {
-        return id_empleado;
+    public int getIdTablaPedido() {
+        return idTablaPedido;
     }
 
-    public void setId_empleado(int id_empleado) {
-        this.id_empleado = id_empleado;
+    public void setIdTablaPedido(int idTablaPedido) {
+        this.idTablaPedido = idTablaPedido;
     }
 
-    // Ejemplo de constructor
-    public DetallesVenta(int idCliente, int idProducto, float total, String tipoPago) {
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getNombreApellidoEmpleado() {
+        return nombreApellidoEmpleado;
+    }
+
+    public void setNombreApellidoEmpleado(String nombreApellidoEmpleado) {
+        this.nombreApellidoEmpleado = nombreApellidoEmpleado;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public List<Articulo> getListaDeProductos() {
+        return listaDeProductos;
+    }
+
+    public void setListaDeProductos(List<Articulo> listaDeProductos) {
+        this.listaDeProductos = listaDeProductos;
+    }
+
+    public DetallesVenta(String nombreApellidoCliente, int idCliente, double totalSuma, String tipoPago, int idTablaPedido, String correo, String nombreApellidoEmpleado, String matricula, String fecha, List<Articulo> listaDeProductos) {
+        this.nombreApellidoCliente = nombreApellidoCliente;
         this.idCliente = idCliente;
-        this.idProducto = idProducto;
-        this.fecha = new Date();
-        this.total = total;
+        this.totalSuma = totalSuma;
         this.tipoPago = tipoPago;
+        this.idTablaPedido = idTablaPedido;
+        this.correo = correo;
+        this.nombreApellidoEmpleado = nombreApellidoEmpleado;
+        this.matricula = matricula;
+        this.fecha = fecha;
+        this.listaDeProductos = listaDeProductos;
     }
 
     public DetallesVenta() {
-
     }
 }

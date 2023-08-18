@@ -50,158 +50,38 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Juanito Perez</td>
-                <td>Pablo Rivera</td>
-                <td>Toyota Corolla</td>
-                <td>Mantenimiento Completo</td>
-                <td>Paquete Gold</td>
-                <td>2023-08-10</td>
-                <td>Si</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-              </tr>
-              <tr>
-                <td>Maria Rodriguez</td>
-                <td>Luis Martinez</td>
-                <td>Ford Mustang</td>
-                <td>Revisión Básica</td>
-                <td>Paquete Silver</td>
-                <td>2023-08-11</td>
-                <td>No</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Pedro Sanchez</td>
-                <td>Ana Garcia</td>
-                <td>Chevrolet Cruze</td>
-                <td>Cambio de Aceite</td>
-                <td>Paquete Bronce</td>
-                <td>2023-08-12</td>
-                <td>No</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Laura Gomez</td>
-                <td>Ana Garcia</td>
-                <td>Nissan Sentra</td>
-                <td>Reparación Completa</td>
-                <td>Paquete Platinum</td>
-                <td>2023-08-09</td>
-                <td>Si</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Sofia Morales</td>
-                <td>Pablo Rivera</td>
-                <td>Hyundai Elantra</td>
-                <td>Revisión Básica</td>
-                <td>Paquete Silver</td>
-                <td>2023-08-07</td>
-                <td>Si</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Miguel Torres</td>
-                <td>Pablo Rivera</td>
-                <td>Toyota Camry</td>
-                <td>Cambio de Aceite</td>
-                <td>Paquete Bronze</td>
-                <td>2023-08-06</td>
-                <td>No</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Ana Fernandez</td>
-                <td>Luis Ramirez</td>
-                <td>Ford Focus</td>
-                <td>Revisión Completa</td>
-                <td>Paquete Gold</td>
-                <td>2023-08-05</td>
-                <td>Si</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Jorge Fernandez</td>
-                <td>Ana Garcia</td>
-                <td>Honda Civic</td>
-                <td>Cambio de Frenos</td>
-                <td>Paquete Gold</td>
-                <td>2023-08-08</td>
-                <td>Si</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
-              <tr>
-                <td>Maria Rodriguez</td>
-                <td>Luis Martinez</td>
-                <td>Ford Mustang</td>
-                <td>Revisión Básica</td>
-                <td>Paquete Silver</td>
-                <td>2023-08-11</td>
-                <td>No</td>
-                <td>
-                  <div class="boton-modal">
-                    <button class="menu-button" onclick="abrirModal('modal-1')">Productos
-                      extra</button>
-                  </div>
-                  <input type="checkbox" id="btn-modal">
-                </td>
-                </td>
-              </tr>
+              <c:forEach varStatus="status" var="man" items="${MostrarMantenimientoTodos}">
+                <c:if test="${man.proceso > 75 }">
+                  <tr>
+                  <td>${man.nombreCliente}</td>
+                  <td>${man.apellido1}${man.apellido2}</td>
+                  <td>${man.marca}</td>
+                  <td>${man.categoria}</td>
+                  <td>${man.nombrePaquete}</td>
+                  <td>${man.fechaInicio}</td>
+                  <c:choose>
+                    <c:when test="${man.extras != 0}">
+                      <td>Si</td>
+                      <td>
+                        <div class="boton-modal">
+                          <button class="menu-button" onclick="abrirModal('modal-${man.id_mantenimiento}')">Productos
+                            extra</button>
+                        </div>
+                        <input type="checkbox" id="btn-modal">
+                      </td>
+                      </tr>
+                    </c:when>
+                    <c:otherwise>
+                      <td>No</td>
+                      <td><div class="boton-modal">
+                        <button disabled class="menu-button" onclick="abrirModal('')">Productos
+                          extra</button>
+                      </div>
+                        <input type="checkbox" id="btn-modal"></td>
+                    </c:otherwise>
+                  </c:choose>
+                </c:if>
+              </c:forEach>
               </tbody>
             </table>
           </div>
@@ -212,8 +92,8 @@
   </div>
 </div>
 
-
-<div class="container-modal" id="modal-1">
+<c:forEach varStatus="status" var="man" items="${MostrarMantenimientoTodos}">
+<div class="container-modal" id="modal-${man.id_mantenimiento}">
   <div class="content-modal">
     <div class="container my-3">
       <div class="card">
@@ -221,7 +101,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-4 d-flex justify-content-center align-items-center">
-              <img src="img/Logo.png" alt="Imagen" style="max-width: 100%;" class="small-image">
+              <img src="assets/img/imagesPaginaPrincipal/logo.png" alt="Imagen" style="max-width: 100%;" class="small-image">
             </div>
             <div class="col-md-8">
               <div class="row">
@@ -236,21 +116,21 @@
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>Aceite de motor</td>
-                        <td>$12.99</td>
-                      </tr>
+                      <c:forEach var="producto" items="${man.listaProductosExtra}">
+                        <tr>
+                          <td>${producto.nombre}</td>
+                          <td>${producto.precio}</td>
+                        </tr>
+                      </c:forEach>
                       </tbody>
                     </table>
                   </div>
                 </div>
-
-
               </div>
             </div>
 
             <div class="btn-cerrar">
-              <button class="btn btn-primary" onclick="cerrarModal('modal-1')">Cerrar</button>
+              <button class="btn btn-primary" onclick="cerrarModal('modal-${man.id_mantenimiento}')">Cerrar</button>
             </div>
           </div>
         </div>
@@ -258,7 +138,7 @@
     </div>
   </div>
 </div>
-
+</c:forEach>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="assets/js/jsHistorialProductos/scriptHistoriales.js"></script>

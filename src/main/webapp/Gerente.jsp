@@ -152,7 +152,7 @@
                         </a>
                         <div id="extraFunciones4" class="collapse extra-funciones">
                             <div class="card">
-                                <a href="HistorialMantenimientosG.jsp" class="funcion">
+                                <a href="ConsultaMantenimientoServlet?tipo=historialG" class="funcion">
                                     <div class="card-body">
                                         <h4 class="card-title">Mantenimientos</h4>
 

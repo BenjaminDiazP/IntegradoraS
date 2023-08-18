@@ -20,16 +20,6 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h2>Registro de Cliente</h2>
-            <nav>
-                <c:choose>
-                    <c:when test="${tipoSesion == 'Gerente'}">
-                        <a href="Gerente.jsp" class="nav_link">Regresar</a>
-                    </c:when>
-                    <c:otherwise>
-                        <a href="Recepcionista.jsp" class="nav_link">Regresar</a>
-                    </c:otherwise>
-                </c:choose>
-            </nav>
         </div>
         <div class="card-body">
             <div class="row">

@@ -172,9 +172,9 @@ public class RegistroDao implements DaoRepository {
                 int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
                 usr.setIdentificador(randomNum);
                 usr.setId_usuario(res.getInt(1));
-                usr.setNombre(res.getString("nombre"));
-                usr.setApellido1(res.getString("apellido1"));
-                usr.setApellido2(res.getString("apellido2"));
+                usr.setNombre(res.getString("Nombre"));
+                usr.setApellido1(res.getString("Apellido1"));
+                usr.setApellido2(res.getString("Apellido2"));
                 usr.setCurp(res.getString("Curp"));
                 usr.setRfc(res.getString("Rfc"));
                 usr.setFechaNac(res.getString("FechaNac"));
@@ -216,9 +216,9 @@ public class RegistroDao implements DaoRepository {
                 int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
                 usr.setIdentificador(randomNum);
                 usr.setId_usuario(res.getInt("idcliente"));
-                usr.setNombre(res.getString("nombre"));
-                usr.setApellido1(res.getString("apellido1"));
-                usr.setApellido2(res.getString("apellido2"));
+                usr.setNombre(res.getString("Nombre"));
+                usr.setApellido1(res.getString("Apellido1"));
+                usr.setApellido2(res.getString("Apellido2"));
                 usr.setCurp(res.getString("Curp"));
                 usr.setRfc(res.getString("Rfc"));
                 usr.setFechaNac(res.getString("FechaNac"));
@@ -501,9 +501,18 @@ public class RegistroDao implements DaoRepository {
 
             stmt.setString(1, correo);
             ResultSet res = stmt.executeQuery();
-
             if (res.next()) {
                 codigoRestablecimiento = res.getString("Codigo");
+            }else{
+                stmt = con.prepareStatement(
+                        "SELECT Codigo FROM Cliente WHERE Correo = ?" /// actualize esto
+                );
+                stmt.setString(1, correo);
+                ResultSet res1 = stmt.executeQuery();
+                if (res1.next()) {
+                    System.out.println("Entro a cliente");
+                    codigoRestablecimiento = res1.getString("Codigo");
+                }
             }
 
         } catch (SQLException e) {
@@ -541,6 +550,15 @@ public class RegistroDao implements DaoRepository {
 
             if (stmt.executeUpdate() > 0) {
                 System.out.println("Codigo Actualizado");
+            }else{
+                stmt = con.prepareStatement(
+                        "UPDATE Cliente SET Codigo = ? WHERE Correo = ?" /// actualize esto
+                );
+                stmt.setString(1, nuevocodigo);
+                stmt.setString(2, correo);
+                if (stmt.executeUpdate() > 0) {
+                    System.out.println("Codigo Actualizado Cliente");
+                }
             }
         } catch (SQLException e) {
             System.out.println("cacho en el error de sql al querer actualizar el codigo en empleado");
@@ -560,15 +578,21 @@ public class RegistroDao implements DaoRepository {
             );
             stmt.setString(1, nuevacontrasenia);
             stmt.setString(2, correo);
-
-
             if (stmt.executeUpdate() > 0) {
                 System.out.println("Contrasena Actualizada");
                 return true;
-            }else {
-                System.out.println("contra no actualizada");
-                return false;
+            }else{
+                stmt = con.prepareStatement(
+                        "UPDATE Cliente SET Contrasenia = sha2(?,224) WHERE Correo = ?"
+                );
+                stmt.setString(1, nuevacontrasenia);
+                stmt.setString(2, correo);
+                if (stmt.executeUpdate() > 0) {
+                    System.out.println("Contrasena Actualizada");
+                    return true;
+                }
             }
+            return false;
         } catch (SQLException e) {
             System.out.println("cacho en el error de sql");
             throw new RuntimeException(e);
@@ -588,12 +612,20 @@ public class RegistroDao implements DaoRepository {
             stmt.setString(1,correo);
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
-                System.out.println("Correo encontrado en la base de datos");
+                System.out.println("Correo encontrado en la base de datos Empleado");
                 return true;
             }else {
-                System.out.println("Correo no encontrado en la base de datos");
-                return false;
+                stmt = con.prepareStatement(
+                        "SELECT Correo FROM Cliente WHERE Correo =?");
+                stmt.setString(1, correo);
+                res = stmt.executeQuery();
+                if (res.next()) {
+                    System.out.println("Correo encontrado en la base de  Cliente");
+                    return true;
+                }
             }
+            System.out.println("Correo no encontrado en la base de datos");
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
@@ -603,7 +635,6 @@ public class RegistroDao implements DaoRepository {
                 e.printStackTrace();
             }
         }
-
     }
 
 

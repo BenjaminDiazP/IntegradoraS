@@ -26,19 +26,6 @@ public class DetallesVentaDao implements DaoRepository {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public List findAll() {
         return null;
@@ -63,7 +50,7 @@ public class DetallesVentaDao implements DaoRepository {
         MySqlConector conector = new MySqlConector();
         int id = -1;
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT  idcliente from Cliente where correo = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT  idcliente from Cliente where Correo = ?");
           stmt.setString(1,correo);
 
             ResultSet res = stmt.executeQuery();
@@ -84,7 +71,7 @@ public class DetallesVentaDao implements DaoRepository {
         }
         int id = -1;
      try (Connection con = conector.connect()){
-         PreparedStatement stmt = con.prepareStatement("SELECT id_producto from producto where nombre = ?");
+         PreparedStatement stmt = con.prepareStatement("SELECT id_producto from Producto where nombre = ?");
          stmt.setString(1,nombre);
          ResultSet res  = stmt.executeQuery();
          if (res.next()){
@@ -97,28 +84,6 @@ public class DetallesVentaDao implements DaoRepository {
      return id;
 
     }
-
-    public boolean insertar(DetallesVenta detallesVenta) {
-        MySqlConector conector = new MySqlConector();
-        try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO Producto_Venta(id_cliente, id_Producto, fecha, total, tipoPago, id_empleado, id_TipoPago )" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)");
-
-            stmt.setInt(1, detallesVenta.getIdCliente());
-            stmt.setInt(2, detallesVenta.getIdProducto());
-            stmt.setDate(3, new java.sql.Date(detallesVenta.getFecha().getTime()));
-            stmt.setFloat(4, detallesVenta.getTotal());
-            stmt.setString(5, detallesVenta.getTipoPago());
-            stmt.setInt(6,detallesVenta.getId_empleado());
-            stmt.setInt(7,0);
-
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
 
 

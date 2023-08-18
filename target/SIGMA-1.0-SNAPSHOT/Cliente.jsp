@@ -46,7 +46,7 @@
 
         <h2>Información Personal</h2>
         <div class="profile-pic">
-            <img src="assets/img/imgCliente/Pcliente.png" alt="Foto del cliente">
+            <img src="assets/img/imgCliente/pcliente.png" alt="Foto del cliente">
         </div>
 
 <<<<<<< HEAD
@@ -135,9 +135,8 @@
         <br>
         <button class="btn-menu" type="button" id="servicesMenuBtn">Servicios</button>
         <div id="servicesMenu" class="menu-content" style="display: none;">
-            <a class="btn btn-secundary" href="HistorialMantenimientoCl.jsp">Historial mantenimientos</a>
-            <a class="btn btn-secundary" href="HistorialComprasCl.jsp">Historial de compras</a>
-            <a class="btn btn-secundary">Mostrar Tickets</a>
+            <a class="btn btn-secundary" href="ConsultaMantenimientoServlet?tipo=historialC">Historial mantenimientos</a>
+            <a class="btn btn-secundary" href="TablasVentasMPServlet?tipo=VentasCliente">Historial de compras</a>
         </div>
         <br>
         <form method="get" action="LogoutServlet">

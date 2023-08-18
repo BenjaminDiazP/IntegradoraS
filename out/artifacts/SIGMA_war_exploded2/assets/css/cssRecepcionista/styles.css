@@ -1,0 +1,116 @@
+body {
+    background-color: #dddddd;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background-color: #141e30;
+    color: white;
+    font-size: 1.5em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.img-thumbnail {
+    width: 100%;
+    height: auto;
+
+
+}
+
+#fotoEmpleado {
+    max-height: 200px;
+}
+
+.funcion {
+    text-decoration: none;
+    color: #333;
+}
+
+.funcion:hover {
+    text-decoration: none;
+    color: #141e30;
+}
+
+.info-row {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info-row a {
+    color: #141e30;
+    text-decoration: none;
+}
+
+.info-row a:hover {
+    text-decoration: underline;
+}
+
+#perfilEmpleado {
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    color: #141e30;
+    background-color: transparent;
+    background-image: none;
+    border-color: #141e30;
+    transition: all .2s;
+}
+
+#perfilEmpleado:hover {
+    color: #fff;
+    background-color: #141e30;
+    border-color: #141e30;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+.extra-funciones .card {
+    margin-top: 1rem;
+}
+
+#cerrarSesion {
+    background-color: #141e30;
+    border-color: #141e30;
+    color: #fff;
+    transition: all .2s;
+}
+
+#cerrarSesion:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    color: #fff;
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #141e30;
+    border-color: #141e30;
+    transition: transform 0.3s ease;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: scale(1.1);
+}
+
+.btn-primary:active, .btn-primary:focus {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+    box-shadow: none !important;
+}

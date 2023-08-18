@@ -1,0 +1,120 @@
+   /* Estilos generales */
+   * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 90%;
+    max-width: 1000px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el título */
+.card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/* Estilos para las imágenes de perfil */
+.profile-pic {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+/* Estilos para los formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+input[type="password"],
+input[type="email"] {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Estilos para los botones */
+.btn-menu,
+.btn-secundary {
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-menu {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+.btn-secundary {
+    background-color: #007bff;
+    color: #fff;
+    margin: 5px;
+}
+
+.btn-menu:hover,
+.btn-secundary:hover {
+    background-color: #0056b3;
+    color: #ffffff;
+}
+
+/* Estilos para los menús */
+.menu-content {
+    padding: 10px;
+    border: 1px solid #eee3e3;
+    background-color: #f8f9fa;
+    display: none;
+}
+
+/* Estilos para los enlaces dentro del menú de servicios */
+.menu-content a {
+    color: #ffffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 5px; 
+}
+
+.menu-content a:hover {
+    background-color: #5058a0;
+}

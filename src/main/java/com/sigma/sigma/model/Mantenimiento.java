@@ -16,7 +16,7 @@ public class Mantenimiento {
     private int  proceso;
     private  String fechaFin;
     private  Float total;
-
+    private int costopaquete;
     private String nombrePaquete;
     private String apellido1;
     private String apellido2;
@@ -209,6 +209,14 @@ public class Mantenimiento {
 
     public void setNoSerie(String noSerie) {
         this.noSerie = noSerie;
+    }
+
+    public int getCostopaquete() {
+        return costopaquete;
+    }
+
+    public void setCostopaquete(int costopaquete) {
+        this.costopaquete = costopaquete;
     }
 
     public Mantenimiento(String noSerie, int id_mecanico, int id_paquete, String fechaInicio, String fechaFin, Float total, String categoria, int proceso, String descripcion){

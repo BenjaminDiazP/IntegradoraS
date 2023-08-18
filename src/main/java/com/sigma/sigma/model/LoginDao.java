@@ -32,8 +32,8 @@ public class    LoginDao implements DaoRepository{
             if (res.next()) {
                 usuario = new Usuario();
                 usuario.setId_usuario(res.getInt("id_empleado"));
-                usuario.setRol(res.getString("rol"));
-                usuario.setNombre(res.getString("nombre"));
+                usuario.setRol(res.getString("Rol"));
+                usuario.setNombre(res.getString("Nombre"));
                 usuario.setCorreo(res.getString("Correo"));
                 usuario.setDireccion(res.getString("Direccion"));
                 usuario.setApellido1(res.getString("Apellido1"));

@@ -39,9 +39,6 @@ public class ProcesoServlet extends HttpServlet {
                                 "Marca: " + detalles.get(0).getMarca() + "\\n" +
                                 "Placas: " + detalles.get(0).getPlacas() + "\\n" +
                                 "Descripcion: " + detalles.get(0).getDescripcion() + "\\n"
-
-
-
                         ,
                         new File(
                                 req.getSession().
