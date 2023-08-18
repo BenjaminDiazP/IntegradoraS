@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Datos de cliente</title>
-<<<<<<< HEAD
     <style>
         /* Estilos del botón */
         .mi-boton {
@@ -30,12 +29,12 @@
             width: 100%;
         }
     </style>
-=======
+
     <link rel="icon" href="assets/img/imagesPaginaPrincipal/logo.ico">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/cssCliente/styleCliente.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
->>>>>>> Benja
+
 </head>
 
 <body>
@@ -49,7 +48,7 @@
             <img src="assets/img/imgCliente/pcliente.png" alt="Foto del cliente">
         </div>
 
-<<<<<<< HEAD
+
         <p><strong>Nombre:</strong> <span id="first-name"></span></p>
         <p><strong>Apellidos:</strong> <span id="last-name"></span></p>
         <p><strong>Email:</strong> <span id="email"></span></p>
@@ -66,15 +65,14 @@
                 <a href="#">Mantenimientos</a>
             </div>
         </div>
-=======
+
         <p><strong>Nombre:</strong> <span id="nombre">${usuario}</span></p>
         <p><strong>Apellidos:</strong> <span id="apellidos">${apellido1} ${apellido2}</span></p>
         <p><strong>Email:</strong> <span id="correo">${correo}</span></p>
 
->>>>>>> Benja
     </div>
     <div class="card">
-<<<<<<< HEAD
+
         <h2>Cambiar contraseña</h2>
         <form>
             <input type="password" id="current-password" name="current-password" placeholder="Contraseña actual">
@@ -86,7 +84,7 @@
             <div class="row justify-content-center">
             </div>
 
-=======
+
         <h2>Opciones de perfil</h2>
         <br>
         <button class="btn-menu" type="button" id="passwordMenuBtn">Cambiar contraseña</button>
@@ -142,18 +140,18 @@
         <form method="get" action="LogoutServlet">
             <input type="submit" value="Cerrar sesión"  class="btn-menu">
             <input type="hidden" value="Agregar usuario" name="Registrar">
->>>>>>> Benja
+
         </form>
 
     </div>
 
 </div>
 
-<<<<<<< HEAD
+
 </body>
 
 </html>
-=======
+
 
 <c:choose>
     <c:when test="${not empty mensajeErrorNoseActualizocontrasenia}">
@@ -233,12 +231,9 @@
     </c:when>
 </c:choose>
 
-
-
-
 <script src="assets/js/jsCliente/scriptCliente.js"></script>
 
 </body>
 
 </html>
->>>>>>> Benja
+
