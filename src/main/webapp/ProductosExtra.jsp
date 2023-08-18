@@ -87,7 +87,7 @@
         <div class="card-header d-flex justify-content-between">
             <h2>Productos</h2>
             <nav>
-                <a href="#" class="nav_link">Regresar</a>
+                <a href="ConsultaMantenimiento.jsp" class="nav_link">Regresar</a>
             </nav>
         </div>
         <form id="productosForm">

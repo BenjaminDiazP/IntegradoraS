@@ -37,7 +37,7 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = connection.connect();
         try{
             PreparedStatement stmt = con.prepareStatement(
-                    "insert into Producto(nombre,costo,categoria,stock,imagen,estado)"+
+                    "insert into Producto(Nombre,Costo,Categoria,Stock,Imagen,Estado)"+
                             "values(?,?,?,?,?,?)"
             );
             stmt.setString(1,art.getNombre());
@@ -73,10 +73,10 @@ public class RegistroArticulosDao implements DaoRepository {
                 int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
                 art.setIdentificador(randomNum);
                 art.setId_producto(res.getInt(1));
-                art.setNombre(res.getString("nombre"));
-                art.setCosto(res.getFloat("costo"));
-                art.setCategoria(res.getString("categoria"));
-                art.setStock(res.getInt("stock"));
+                art.setNombre(res.getString("Nombre"));
+                art.setCosto(res.getFloat("Costo"));
+                art.setCategoria(res.getString("Categoria"));
+                art.setStock(res.getInt("Stock"));
                 art.setEstado(res.getInt("Estado"));
                 byte[] image = res.getBytes("Imagen");
                 String imageStr = Base64.getEncoder().encodeToString(image);
@@ -99,8 +99,8 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = connection.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND categoria = 'Producto'" +
-                            "AND Estado = 1 AND stock >= 1"
+                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND Categoria = 'Producto'" +
+                            "AND Estado = 1 AND Stock >= 1"
             );
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
@@ -109,10 +109,10 @@ public class RegistroArticulosDao implements DaoRepository {
                 int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
                 art.setIdentificador(randomNum);
                 art.setId_producto(res.getInt(1));
-                art.setNombre(res.getString("nombre"));
-                art.setCosto(res.getFloat("costo"));
-                art.setCategoria(res.getString("categoria"));
-                art.setStock(res.getInt("stock"));
+                art.setNombre(res.getString("Nombre"));
+                art.setCosto(res.getFloat("Costo"));
+                art.setCategoria(res.getString("Categoria"));
+                art.setStock(res.getInt("Stock"));
                 byte[] image = res.getBytes("Imagen");
                 String imageStr = Base64.getEncoder().encodeToString(image);
                 art.setImagen(imageStr);
@@ -134,8 +134,8 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = connection.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND categoria = 'Servicio'" +
-                            "AND Estado = 1 AND stock >= 1"
+                    "SELECT * FROM Producto WHERE Imagen IS NOT NULL AND Imagen != '' AND Categoria = 'Servicio'" +
+                            "AND Estado = 1 AND Stock >= 1"
             );
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
@@ -144,10 +144,10 @@ public class RegistroArticulosDao implements DaoRepository {
                 int randomNum = ThreadLocalRandom.current().nextInt(1000, 10000);
                 art.setIdentificador(randomNum);
                 art.setId_producto(res.getInt(1));
-                art.setNombre(res.getString("nombre"));
-                art.setCosto(res.getFloat("costo"));
-                art.setCategoria(res.getString("categoria"));
-                art.setStock(res.getInt("stock"));
+                art.setNombre(res.getString("Nombre"));
+                art.setCosto(res.getFloat("Costo"));
+                art.setCategoria(res.getString("Categoria"));
+                art.setStock(res.getInt("Stock"));
                 byte[] image = res.getBytes("Imagen");
                 String imageStr = Base64.getEncoder().encodeToString(image);
                 art.setImagen(imageStr);
@@ -168,7 +168,7 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = conector.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "UPDATE Producto SET nombre=?, costo=?, categoria=?, stock=? WHERE id_producto=?");
+                    "UPDATE Producto SET Nombre=?, Costo=?, Categoria=?, Stock=? WHERE id_producto=?");
 
             stmt.setString(1, articulo.getNombre());
             stmt.setDouble(2, articulo.getCosto());
@@ -235,12 +235,12 @@ public class RegistroArticulosDao implements DaoRepository {
         Connection con = connection.connect();
         try {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT Estado,stock from Producto where id_producto = ?"
+                    "SELECT Estado,Stock from Producto where id_producto = ?"
             );
             stmt.setInt(1, id);
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
-                int estado = res.getInt("estado");
+                int estado = res.getInt("Estado");
                 return estado;
             } else {
                 throw new RuntimeException("No se encontró ningún registro con el ID proporcionado.");

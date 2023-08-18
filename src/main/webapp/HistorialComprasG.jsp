@@ -186,13 +186,13 @@
                             <tbody>
                             <c:forEach var="prductoVIfo" items="${listaProductoVentaInfo}" varStatus="status">
                                 <tr>
-                                <td>${prductoVIfo.nombreApellido}</td>
-                                <td>${prductoVIfo.correoElectronico}</td>
+                                <td>${prductoVIfo.nombreApellidoCliente}</td>
+                                <td>${prductoVIfo.correo}</td>
                                 <td>${prductoVIfo.fecha}</td>
-                                <td>${prductoVIfo.total}</td>
+                                <td>${prductoVIfo.totalSuma}</td>
                                 <td>
                                     <div class="boton-modal">
-                                        <button class="menu-button" onclick="abrirModal('modal-${prductoVIfo.idProductoVenta}')">Ver
+                                        <button class="menu-button" onclick="abrirModal('modal-${prductoVIfo.idTablaPedido}')">Ver
                                             ticket</button>
                                     </div>
                                     <input type="checkbox" id="btn-modal">
@@ -212,43 +212,45 @@
 
 
 <c:forEach var="prductoVIfo" items="${listaProductoVentaInfo}" varStatus="status">
-<div class="container-modal-ticket" id="modal-${prductoVIfo.idProductoVenta}" style="overflow-y: scroll;">
+<div class="container-modal-ticket" id="modal-${prductoVIfo.idTablaPedido}" style="overflow-y: scroll;">
     <div class="content-modal ticket-style">
         <div class="ticket-header">
             <br>
             <h5 style="margin-left: 25px;">Sistema Gestor de Mantenimiento Automotriz</h5>
             <span style="font-size: 14px;">
-                    <strong>Cliente:</strong> ${prductoVIfo.nombreApellido}<br>
+                    <strong>Cliente:</strong> ${prductoVIfo.nombreApellidoCliente}<br>
                     <strong>Fecha:</strong>${prductoVIfo.fecha}<br>
                     <strong>Método de pago:</strong>${prductoVIfo.tipoPago}<br>
+                    <strong>Vehículo con matrícula:</strong>${prductoVIfo.matricula}<br>
+                    <strong>Fecha:</strong>${prductoVIfo.fecha}<br>
+                    <strong>Atendido por:</strong>${prductoVIfo.nombreApellidoEmpleado}
             </span>
         </div>
-
         <div class="ticket-details">
             <br>
-
             <ul class="item-list">
                 <li id="special-li" class="special-item"><strong>Producto</strong> <span
                         class="item-price">Precio</span></li>
-
+    <c:forEach var="pro" items="${prductoVIfo.listaDeProductos}" varStatus="status">
+                <li>${pro.nombre}<span class="item-price">$${pro.costo}</span></li>
+    </c:forEach>
             </ul>
             <hr class="special-hr">
         </div>
         <div class="ticket-total">
-
                 <span>
                     <strong>TOTAL</strong>
                     <br>
-                    <strong>$00.00</strong>
+                        <strong>$${prductoVIfo.totalSuma}</strong>
                 </span>
             <br>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <strong>GRACIAS POR SU COMPRA!!</strong>
-                <img src="img/Logo.png" style="width: 80px; height: 70px;">
+                <img src="assets/img/imagesPaginaPrincipal/logo.png" style="width: 80px; height: 70px;">
             </div>
         </div>
         <div class="btn-cerraar">
-            <button class="btn btn-secondaryy" onclick="cerrarModal('modal-${prductoVIfo.idProductoVenta}')">Cerrar</button>
+            <button class="btn btn-secondaryy" onclick="cerrarModal('modal-${prductoVIfo.idTablaPedido}')">Cerrar</button>
         </div>
     </div>
 </div>

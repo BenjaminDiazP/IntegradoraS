@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.search-container {
+    text-align: center;
+    margin: 50px auto;
+}
+
+#search-input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#search-button {
+    padding: 6px 12px;
+    background-color: #141e30;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+#search-button:hover {
+    background-color: #c82333;
+}
+
+.custom-button {
+    text-decoration: none;
+    padding: 6px 10px;
+    background-color: #141e30;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+    display: none;
+}
+
+.custom-button:hover {
+    background-color: #c82333;
+    color: #fff;
+    text-decoration: none;
+}
+
+.message-box {
+    position: absolute;
+    width: 220px;
+    background-color: #e9a5aa;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #db0b20;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+    animation: fadeInOut 2s ease-in-out;
+    transform: translate(-50%, 10%);
+    left: 50%;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#search-button {
+    position: relative;
+}
+
+.search-container {
+    position: relative;
+}
+
+#descripcion-row input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}

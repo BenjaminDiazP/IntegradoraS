@@ -8,6 +8,7 @@
     <title>Panel de Empleado</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/cssGerente/styles.css" type="text/css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -20,33 +21,32 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-3">
-                    <img id="fotoEmpleado" src="" alt="Foto de Empleado" class="img-thumbnail">
+                    <img id="fotoEmpleado" src="assets/img/imgGerente/usuario.png" alt="Foto de Empleado" class="img-thumbnail">
                 </div>
+                <c:if test ="${not empty usuario}">
                 <div class="col-md-9">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="info-row d-flex">
-                                <p><strong>Nombre:</strong> <span id="nombreEmpleado"></span></p>
+                                <p><strong>Nombre: ${ usuario}</strong> <span id="nombreEmpleado"></span></p>
                             </div>
                             <div class="info-row d-flex">
-                                <p><strong>Apellido Materno:</strong> <span id="apellidoEmpleado"></span></p>
+                                <p><strong>Apellido Materno:  ${apellido1}</strong> <span id="apellidoEmpleado"></span></p>
                             </div>
                             <div class="info-row d-flex">
-                                <p><strong>Apellido Paterno:</strong> <span id="rolEmpleado"></span></p>
+                                <p><strong>Apellido Paterno: ${apellido2}</strong> <span id="rolEmpleado"></span></p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="info-row d-flex">
-                                <p><strong>Edad:</strong> <span id="edadEmpleado"></span></p>
+                                <p><strong>Email:${correo}</strong> <span id="emailEmpleado"></span></p>
                             </div>
                             <div class="info-row d-flex">
-                                <p><strong>Email:</strong> <span id="emailEmpleado"></span></p>
-                            </div>
-                            <div class="info-row d-flex">
-                                <p><strong>Dirección:</strong> <span id="direccionEmpleado"></span></p>
+                                <p><strong>Dirección: ${direccion}</strong> <span id="direccionEmpleado"></span></p>
                             </div>
                         </div>
                     </div>
+                    </c:if>
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-end">
                             <button type="button" class="btn btn-link" data-toggle="collapse"
@@ -54,8 +54,10 @@
                         </div>
                     </div>
                     <div id="moreInfo" class="collapse mt-3">
+                        <p><strong>Estás a punto de cambiar tu contraseña o correo</strong></p>
                         <div class="menu-container">
                             <div class="boton-modal">
+
                                 <button class="btn btn-primary" onclick="abrirModal('modal-1')">Modificar
                                     contraseña</button>
                             </div>
@@ -117,13 +119,17 @@
                 <div class="card-header d-flex justify-content-between">
                     <h2>Cambiar contraseña</h2>
                 </div>
-                <form id="cambio-contrasenia-Form">
+                <form id="cambio-contrasenia-Form"  method="post" action="CambiarContraCorreoECServlet">
                     <div class="form-row d-flex justify-content-center">
                         <div class="form-group col-md-6">
-                            <label for="contra1">Ingresa tu nueva contraseña</label>
-                            <input type="text" class="form-control" id="contra1" required>
-                            <label for="contra2">Repite tu contraseña</label>
-                            <input type="text" class="form-control" id="contra2" required>
+                            <label >Ingresa tu nueva contraseña</label>
+                            <input type="text" class="form-control" name="nuevacontra" required>
+                            <label >Repite tu contraseña</label>
+                            <input type="text" class="form-control" name="nuevacontrac" required>
+                            <label ></label>
+                            <input type="hidden" class="form-control" name="correo" required value="${correo}">
+                            <label ></label>
+                            <input type="hidden" class="form-control" name="rol" required value="${tipoSesion}">
                         </div>
                     </div>
                     <div class="footer">
@@ -131,6 +137,7 @@
 
                             <div>
                                 <input type="submit" value="Cambiar contraseña" class="btn btn-primary">
+                                <input type="hidden" value="Cambiar contrasenia" name="accion" class="btn btn-primary">
                             </div>
                         </div>
                     </div>
@@ -150,13 +157,15 @@
                 <div class="card-header d-flex justify-content-between">
                     <h2>Cambiar correo</h2>
                 </div>
-                <form id="cambio-correo-Form">
+                <form id="cambio-correo-Form" method="post" action="CambiarContraCorreoECServlet">
                     <div class="form-row d-flex justify-content-center">
                         <div class="form-group col-md-6">
-                            <label for="correo1">Ingresa tu nuevo correo</label>
-                            <input type="text" class="form-control" id="correo1" required>
-                            <label for="correo2">Repite tu correo</label>
-                            <input type="text" class="form-control" id="correo2" required>
+                            <label >Ingresa tu nuevo correo</label>
+                            <input type="text" class="form-control" name="correonuevo" required>
+                            <label >Repite tu correo</label>
+                            <input type="text" class="form-control" name="correonuevoc" required>
+                            <label ></label>
+                            <input type="hidden" class="form-control" name="rol" required value="${tipoSesion}">
                         </div>
                     </div>
                     <div class="footer">
@@ -164,6 +173,7 @@
 
                             <div>
                                 <input type="submit" value="Cambiar correo" class="btn btn-primary">
+                                <input type="hidden" value="Cambiar correo" name="accion" class="btn btn-primary">
                             </div>
                         </div>
                     </div>
@@ -175,7 +185,85 @@
         </div>
     </div>
 </div>
+<!-------------------------------------->
 
+<c:choose>
+    <c:when test="${not empty mensajeErrorNoseActualizocontrasenia}">
+        <script>
+            swal({
+                title: "Error de contraseñas!",
+                text: "La contrasenia no se actualizo.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorNoseActualizocontrasenia" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorContrasenias}">
+        <script>
+            swal({
+                title: "Error de contraseñas!",
+                text: "Las contraseñas no coinciden.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorContrasenias" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorCambioCorreo}">
+        <script>
+            swal({
+                title: "Error de correo!",
+                text: "No se logro actualizar el correo.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorCambioCorreo" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeErrorNoCoincideCorreo}">
+        <script>
+            swal({
+                title: "Error de correo!",
+                text: "No coinciden los correos.",
+                icon: "error",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeErrorNoCoincideCorreo" scope="session"/>
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+    <c:when test="${not empty mensajeExito}">
+        <script>
+            swal({
+                title: "Cambio Existoso!",
+                text: "Se a actualizado correctamente.",
+                icon: "success",
+            });
+            // Elimina el atributo de sesión después de mostrar el mensaje
+            <c:remove var="mensajeExito" scope="session" />
+            // Recarga la página después de un breve retraso (por ejemplo, 2 segundos)
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+        </script>
+    </c:when>
+</c:choose>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

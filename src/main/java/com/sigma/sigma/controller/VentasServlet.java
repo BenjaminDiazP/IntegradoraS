@@ -40,43 +40,32 @@ public class VentasServlet extends HttpServlet {
             return;
         }
 
-
         ArrayList<String> listaPedido = new ArrayList<>();
 
         JsonParser parser = new JsonParser();
         try {
             JsonArray productosArray = (JsonArray) parser.parse(productosJson);
             int idEmpleado = (Integer) req.getSession().getAttribute("id_empleado");
+            VentasDao ventasDao = new VentasDao();
 
+           boolean idPedido = ventasDao.insertarPedido(idEmpleado, tipo);
+           int id = 0;
+           if (idPedido){
+               id = ventasDao.ultimoId();
+           }
             for (JsonElement elem : productosArray) {
 
                 JsonObject productoObj = elem.getAsJsonObject();
                 JsonElement nombre = productoObj.get("nombre");
                 JsonElement precio = productoObj.get("precio");
                 JsonElement categoria = productoObj.get("categoria");
-
                 System.out.println("Nombre: " + nombre + ", Precio: " + precio + ", Categoria: " + categoria);
-                listaPedido.add(String.valueOf(nombre));
 
-/*
-                DetallesVenta detallesVenta = new DetallesVenta();
-                detallesVenta.setIdCliente(da2.buscarIdPorCorreo(correo));
-                detallesVenta.setIdProducto(da2.buscarIdxNombre(String.valueOf(nombre)));
-                detallesVenta.setFecha(new Date());
-                detallesVenta.setTotal(Float.parseFloat(String.valueOf(precio)));
-                detallesVenta.setTipoPago(tipo);
-                detallesVenta.setId_empleado(idEmpleado);
-                // Aquí llama a tu método para insertar el objeto DetallesVenta en la base de datos
-               // boolean exito = da2.insertar(detallesVenta);
+                int id_producto = ventasDao.buscarIdxNombre(String.valueOf(nombre));
+                int id_cliente = ventasDao.buscarIdPorCorreo(correo);
+                Float prec = Float.valueOf(String.valueOf(precio));
 
-                if (exito) {
-                    System.out.println("Detalles de venta registrados exitosamente.");
-                } else {
-                    System.out.println("Error al registrar detalles de venta.");
-                }
-            }
-             */
-
+                boolean exito = ventasDao.insertar(id_cliente, id_producto, prec, id);
             }
                 // Responder con un mensaje de éxito
                 resp.setContentType("text/plain");

@@ -110,10 +110,10 @@ public class PaquetesDao implements DaoRepository{
 
         try (Connection con = cone.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT P.id_paquete, P.nombre AS paquete_nombre, P.categoria, P.costo, A.nombre AS producto_nombre " +
+                    "SELECT P.id_paquete, P.Nombre AS paquete_nombre, P.Categoria, P.Costo, A.Nombre AS producto_nombre " +
                             "FROM Paquete P " +
-                            "INNER JOIN contenido_paquete C ON P.id_paquete = C.id_paquete " +
-                            "INNER JOIN Producto A ON A.id_producto = C.id_producto;");
+                            "INNER JOIN Contenido_Paquete C ON P.id_paquete = C.id_paquete " +
+                            "INNER JOIN Producto A ON A.id_producto = C.id_producto");
             ResultSet res = stmt.executeQuery();
 
             Map<Integer, Paquete> paqueteMap = new HashMap<>();
@@ -123,8 +123,8 @@ public class PaquetesDao implements DaoRepository{
                 if (!paqueteMap.containsKey(paqueteId)) {
                     Paquete paq = new Paquete();
                     paq.setNombre(res.getString("paquete_nombre"));
-                    paq.setPrecio(res.getDouble("costo"));
-                    paq.setCategoria(res.getString("categoria"));
+                    paq.setPrecio(res.getDouble("Costo"));
+                    paq.setCategoria(res.getString("Categoria"));
                     paq.setElementos(new ArrayList<>());
                     paqueteMap.put(paqueteId, paq);
                     Paque_Prod.add(paq);
@@ -153,12 +153,12 @@ public class PaquetesDao implements DaoRepository{
         Connection conn = null;
         try {
 
-            String query = "SELECT costo FROM Producto WHERE nombre = ?";
+            String query = "SELECT Costo FROM Producto WHERE Nombre = ?";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setString(1, nombreArticulo);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                precioArticulo = resultSet.getDouble("costo");
+                precioArticulo = resultSet.getDouble("Costo");
             }
         } catch (SQLException e) {
             e.printStackTrace();

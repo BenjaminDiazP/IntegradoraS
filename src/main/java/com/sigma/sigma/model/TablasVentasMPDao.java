@@ -96,7 +96,7 @@ public class TablasVentasMPDao implements DaoRepository {
         MySqlConector conector = new  MySqlConector();
         int id =-1;
         try (Connection con = conector.connect()){
-            PreparedStatement stmt = con.prepareStatement("SELECT idcliente from cliente where  correo = ? ");
+            PreparedStatement stmt = con.prepareStatement("SELECT idcliente from Cliente where  Correo = ? ");
 
             stmt.setString(1,correo);
         }catch (SQLException e){
@@ -108,7 +108,7 @@ public class TablasVentasMPDao implements DaoRepository {
         MySqlConector conector = new MySqlConector();
         int nombreA = -1;
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT id_producto FROM PRODUCTO where nombre =?");
+            PreparedStatement stmt = con.prepareStatement("SELECT id_producto FROM Producto where Nombre =?");
             stmt.setString(1, nombre.trim());
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
@@ -125,7 +125,7 @@ public class TablasVentasMPDao implements DaoRepository {
         Float precio = 0.0F;
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT costo from productos WHERE  nombre =?");
+            PreparedStatement stmt = con.prepareStatement("SELECT Costo from Productos WHERE  Nombre =?");
        stmt.setString(1,nombre);
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
@@ -192,7 +192,7 @@ return precio;
             MySqlConector conector = new MySqlConector();
 
             try (Connection con = conector.connect()) {
-                String insertQuery = "INSERT INTO Tabla_Pedido(id_TablaPedido, fecha)" +
+                String insertQuery = "INSERT INTO Tabla_Pedido(id_TablaPedido, Fecha)" +
                         " VALUES (?, ?)";
 
                 try (PreparedStatement stmt = con.prepareStatement(insertQuery)) {
@@ -218,13 +218,16 @@ public  List<Articulo> mostrarArticulos (int id_productoVen){
     List<Articulo> listaArticulos= new ArrayList<>();
     MySqlConector conector = new MySqlConector();
     try (Connection con = conector.connect()) {
-        PreparedStatement stmt = con.prepareStatement("SELECT P.nombre, P.costo FROM Producto P JOIN Producto_Venta PV on P.id_producto = PV.id_producto where  PV.id_ProductoVenta = ?");
+        PreparedStatement stmt = con.prepareStatement(" SELECT P.Nombre, P.Costo FROM Producto P \n" +
+                " JOIN Producto_Venta PV on P.id_producto = PV.id_producto \n" +
+                " JOIN Tabla_Pedido TP ON TP.id_TablaPedido = PV.id_TablaPedido\n" +
+                " where  TP.id_TablaPedido = ?");
         stmt.setInt(1, id_productoVen);
         ResultSet res = stmt.executeQuery();
         while (res.next()) {
           Articulo art = new Articulo();
-            art.setNombre(res.getString("P.nombre"));
-            art.setCosto((float) res.getDouble("P.costo"));
+            art.setNombre(res.getString("P.Nombre"));
+            art.setCosto((float) res.getDouble("P.Costo"));
             listaArticulos.add(art);
         }
     } catch (SQLException e) {

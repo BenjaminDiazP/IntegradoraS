@@ -97,7 +97,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 d-flex justify-content-center align-items-center">
-                                <img src="" width="200" height="200" alt="Imagen" style="max-width: 100%;" class="small-image">
+                                <img src="assets/img/imagesPaginaPrincipal/logo.png" width="200" height="200" alt="Imagen" style="max-width: 100%;" class="small-image">
                             </div>
                             <div class="col-md-8">
                                 <div class="row">

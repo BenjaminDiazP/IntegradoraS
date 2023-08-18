@@ -78,6 +78,26 @@ public class ConsultaMantenimientoServlet extends HttpServlet {
             }
             req.getSession().setAttribute("registrosDeMantenimiento", listaMantenimiento);
             req.getRequestDispatcher("HistorialMantenimientosM.jsp").forward(req, resp);
+        }else if(tipo.equals("historialG")){
+            List<Mantenimiento> MostrarMantenimientoTodos = dao1.MostrarMantenimientosTotales();
+            for (Mantenimiento mantenimiento : MostrarMantenimientoTodos) {
+                List<ProductoExtra> listaProductosExtra = dao1.obtenerProductosExtraPorMantenimiento(mantenimiento.getId_mantenimiento());
+                mantenimiento.setListaProductosExtra(listaProductosExtra);
+            }
+            req.getSession().setAttribute("MostrarMantenimientoTodos",MostrarMantenimientoTodos);
+            req.getRequestDispatcher("HistorialMantenimientosG.jsp").forward(req,resp);
+
+        }else if(tipo.equals("historialC")){
+            System.out.println("ENTRO PARA MOSTRAR EL MANTENIMIENTO DE EL CLIENTE");
+            Integer  idCliente= (Integer) req.getSession().getAttribute("id_cliente");
+            System.out.println(idCliente);
+            List<Mantenimiento> MostrarMantenimientosCliente = dao1.MostrarMantenimientoCliente(idCliente);
+            for (Mantenimiento mantenimiento : MostrarMantenimientosCliente) {
+                List<ProductoExtra> listaProductosExtra = dao1.obtenerProductosExtraPorMantenimiento(mantenimiento.getId_mantenimiento());
+                mantenimiento.setListaProductosExtra(listaProductosExtra);
+            }
+            req.getSession().setAttribute("MostrarMantenimientosCliente",MostrarMantenimientosCliente);
+            req.getRequestDispatcher("HistorialMantenimientoCl.jsp").forward(req,resp);
         }
 
     }

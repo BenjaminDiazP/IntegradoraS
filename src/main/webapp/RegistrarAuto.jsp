@@ -54,7 +54,7 @@
               <input type="text" class="form-control" name="color" required>
             </div>
             <div class="form-group col-md-4">
-              <label for="placas">Placas</label>
+              <label >Placas</label>
               <input type="text" class="form-control" name="placas" required>
             </div>
           </div>
@@ -78,7 +78,7 @@
               <input type="text" class="form-control" name="tipo" required>
             </div>
             <div class="form-group col-md-4">
-              <label for="fechaEntrada">Fecha de Registro</label>
+              <label >Fecha de Registro</label>
               <input type="date" class="form-control" name="fecharegistro" required>
             </div>
             <div class="form-group col-md-4">
@@ -86,8 +86,8 @@
               <input type="file" class="form-control" name="imagen" required>
             </div>
             <div class="form-group col-md-4">
-              <label for="tipo"></label>
-              <input type="hidden" class="form-control" name="id_cliente" value="${clienteID}" required>
+              <label for="tipo">idcleinte</label>
+              <input type="text" class="form-control" name="id_cliente" value="${clienteID}" required>
             </div>
           </div>
           <div class="footer">

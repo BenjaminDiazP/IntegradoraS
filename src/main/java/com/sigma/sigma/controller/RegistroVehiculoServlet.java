@@ -43,8 +43,9 @@ public class RegistroVehiculoServlet extends HttpServlet {
                 imagen = req.getPart("imagen");
                 InputStream imageBytes = imagen.getInputStream();
                 RegistroVehiculoDao dao = new RegistroVehiculoDao();
-                boolean resultado=  dao.insertVehiculo(new Vehiculo(noserie,id_cliente,marca,modelo,color,tipoCombustible,placas,tipoTransmision,noMotor,tipo,fechaRegistro), imageBytes);
+                boolean resultado =  dao.insertVehiculo(new Vehiculo(noserie,id_cliente,marca,modelo,color,tipoCombustible,placas,tipoTransmision,noMotor,tipo,fechaRegistro), imageBytes);
                 if(resultado){
+                    System.out.println("Entro aqui por el registro fue exitoso");
                     List<Vehiculo> listaVehiculo = dao.getAllVehiculos();
                     req.getSession().setAttribute("listaVehiculo", listaVehiculo);
                     req.getSession().setAttribute("mensajeExito", "Registro Exitoso");

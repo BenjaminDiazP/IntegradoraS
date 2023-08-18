@@ -47,17 +47,17 @@ public class MantenimientoDao implements DaoRepository {
         Mantenimiento man = new Mantenimiento();
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT C.nombre, C.correo, C.apellido1,C.apellido2, V.placas, V.Marca FROM Cliente C JOIN Vehiculo V on C.idcliente = V.id_cliente  WHERE C.correo= ?");
+                    "SELECT C.Nombre, C.Correo, C.Apellido1,C.Apellido2, V.Placas, V.Marca FROM Cliente C JOIN Vehiculo V on C.idcliente = V.id_cliente  WHERE C.Correo= ?");
             stmt.setString(1, query.trim());
             ResultSet res = stmt.executeQuery();
 
             if (res.next()) {
-                man.setNombreCliente(res.getString("C.nombre"));
-                man.setCorreo(res.getString("C.correo"));
-                man.setPlacas(res.getString("V.placas"));
+                man.setNombreCliente(res.getString("C.Nombre"));
+                man.setCorreo(res.getString("C.Correo"));
+                man.setPlacas(res.getString("V.Placas"));
                 man.setMarca(res.getString("V.Marca"));
-                man.setApellido1(res.getString("C.apellido1"));
-                man.setApellido2(res.getString("C.apellido2"));
+                man.setApellido1(res.getString("C.Apellido1"));
+                man.setApellido2(res.getString("C.Apellido2"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -72,15 +72,15 @@ public class MantenimientoDao implements DaoRepository {
 
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT * from Empleado  WHERE rol = 'Mecanico' ");
+                    "SELECT * from Empleado  WHERE Rol = 'Mecanico'");
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
                 Usuario usr = new Usuario();
-                usr.setNombre(res.getString("nombre"));
-                usr.setApellido1(res.getString("apellido1"));
-                usr.setApellido2(res.getString("apellido2"));
+                usr.setNombre(res.getString("Nombre"));
+                usr.setApellido1(res.getString("Apellido1"));
+                usr.setApellido2(res.getString("Apellido2"));
                 usr.setId_usuario(res.getInt("id_empleado"));
-                usr.setCorreo(res.getString("correo"));
+                usr.setCorreo(res.getString("Correo"));
 
                 mecanicosList.add(usr);
             }
@@ -97,11 +97,11 @@ public class MantenimientoDao implements DaoRepository {
 
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT nombre FROM Paquete WHERE categoria = ?");
+                    "SELECT Nombre FROM Paquete WHERE Categoria = ?");
             stmt.setString(1, categoria);
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
-                String nombreP = res.getString("nombre");
+                String nombreP = res.getString("Nombre");
                 nombre.add(nombreP);
             }
         } catch (SQLException e) {
@@ -114,7 +114,7 @@ public class MantenimientoDao implements DaoRepository {
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "INSERT INTO MANTENIMIENTO (NoSerie, id_empleado, id_paquete, categoria, fechaInicio, fechaFin, proceso, total, descripcion)" +
+                    "INSERT INTO Mantenimiento (NoSerie, id_empleado, id_paquete, Categoria, FechaInicio, FechaFin, Proceso, Total, Descripcion)" +
                             "VALUES(?,?,?,?,?,?,?,?,?) "
             );
 
@@ -144,7 +144,7 @@ public class MantenimientoDao implements DaoRepository {
         int idPaquete = -1;
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT id_paquete from Paquete WHERE nombre= ?"
+                    "SELECT id_paquete from Paquete WHERE Nombre= ?"
             );
             stmt.setString(1, nombre);
 
@@ -165,12 +165,12 @@ public class MantenimientoDao implements DaoRepository {
         String noSerie = "";
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT V.noSerie as numeroSerie from Vehiculo V JOIN Cliente C on  C.idcliente = V.id_cliente  WHERE C.correo = ?"
+                    "SELECT V.NoSerie as NumeroSerie from Vehiculo V JOIN Cliente C on  C.idcliente = V.id_cliente  WHERE C.Correo = ?"
             );
             stmt.setString(1, correo.trim());
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
-                noSerie = res.getString("numeroSerie");
+                noSerie = res.getString("NumeroSerie");
                 return noSerie;
             }
 
@@ -186,12 +186,12 @@ public class MantenimientoDao implements DaoRepository {
 
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement(
-                    "SELECT  costo from Paquete where nombre = ?"
+                    "SELECT Costo from Paquete where Nombre = ?"
             );
             stmt.setString(1, paquete);
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
-                precio = res.getDouble("costo");
+                precio = res.getDouble("Costo");
                 return precio;
             }
 
@@ -209,64 +209,64 @@ public class MantenimientoDao implements DaoRepository {
             PreparedStatement stmt = con.prepareStatement(
                     "SELECT\n" +
                             "    M.id_empleado,\n" +
-                            "    P.costo,\n" +
+                            "    P.Costo,\n" +
                             "    V.Imagen,\n" +
-                            "    V.marca,\n" +
+                            "    V.Marca,\n" +
                             "    M.id_mantenimiento,\n" +
-                            "    M.proceso,\n" +
-                            "    M.categoria,\n" +
-                            "    M.descripcion,\n" +
+                            "    M.Proceso,\n" +
+                            "    M.Categoria,\n" +
+                            "    M.Descripcion,\n" +
                             "    V.id_cliente,\n" +
                             "    M.NoSerie,\n" +
-                            "    M.fechaInicio,\n" +
-                            "    C.nombre,\n" +
-                            "    C.apellido1,\n" +
-                            "    C.apellido2,\n" +
-                            "    P.nombre AS nombre_paquete,\n" +
+                            "    M.FechaInicio,\n" +
+                            "    C.Nombre,\n" +
+                            "    C.Apellido1,\n" +
+                            "    C.Apellido2,\n" +
+                            "    P.Nombre AS nombre_paquete,\n" +
                             "    COUNT(E.id_producto) AS cantidad_productos_extra\n" +
                             "FROM\n" +
                             "    Cliente C\n" +
                             "JOIN\n" +
                             "    Vehiculo V ON V.id_cliente = C.idcliente\n" +
                             "JOIN\n" +
-                            "    MANTENIMIENTO M ON V.NoSerie = M.NoSerie\n" +
+                            "    Mantenimiento M ON V.NoSerie = M.NoSerie\n" +
                             "JOIN\n" +
-                            "    PAQUETE P ON P.id_paquete = M.id_paquete\n" +
+                            "    Paquete P ON P.id_paquete = M.id_paquete\n" +
                             "LEFT JOIN\n" +
-                            "    extra E ON M.id_mantenimiento = E.id_mantenimiento\n" +
+                            "    Extra E ON M.id_mantenimiento = E.id_mantenimiento\n" +
                             "WHERE\n" +
                             "    M.id_empleado=?\n" +
                             "GROUP BY\n" +
                             "    M.id_empleado,\n" +
                             "    V.Imagen,\n" +
-                            "    V.marca,\n" +
+                            "    V.Marca,\n" +
                             "    M.id_mantenimiento,\n" +
-                            "    M.proceso,\n" +
-                            "    M.categoria,\n" +
-                            "    M.descripcion,\n" +
+                            "    M.Proceso,\n" +
+                            "    M.Categoria,\n" +
+                            "    M.Descripcion,\n" +
                             "    V.id_cliente,\n" +
                             "    M.NoSerie,\n" +
-                            "    M.fechaInicio,\n" +
-                            "    C.nombre,\n" +
-                            "    C.apellido1,\n" +
-                            "    C.apellido2,\n" +
-                            "    P.nombre;");
+                            "    M.FechaInicio,\n" +
+                            "    C.Nombre,\n" +
+                            "    C.Apellido1,\n" +
+                            "    C.Apellido2,\n" +
+                            "    P.Nombre;");
             stmt.setInt(1, id);
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
                 Mantenimiento man = new Mantenimiento();
                 man.setNoSerie(res.getString("M.NoSerie"));
-                man.setFechaInicio(res.getString("M.fechaInicio"));
+                man.setFechaInicio(res.getString("M.FechaInicio"));
                 man.setNombrePaquete(res.getString("nombre_paquete"));
-                man.setNombreCliente(res.getString("C.nombre"));
-                man.setDescripcion(res.getString("M.descripcion"));
-                man.setCategoria(res.getString("M.categoria"));
+                man.setNombreCliente(res.getString("C.Nombre"));
+                man.setDescripcion(res.getString("M.Descripcion"));
+                man.setCategoria(res.getString("M.Categoria"));
                 man.setId_mecanico(res.getInt("M.id_empleado"));
                 man.setId_mantenimiento(res.getInt("M.id_mantenimiento"));
-                man.setProceso(res.getInt("M.proceso"));
-                man.setApellido1(res.getString("C.apellido1"));
-                man.setApellido2(res.getString("C.apellido2"));
-                man.setMarca(res.getString("V.marca"));
+                man.setProceso(res.getInt("M.Proceso"));
+                man.setApellido1(res.getString("C.Apellido1"));
+                man.setApellido2(res.getString("C.Apellido2"));
+                man.setMarca(res.getString("V.Marca"));
                 man.setExtras(res.getInt("cantidad_productos_extra"));
                 listMantenimiento.add(man);
             }
@@ -275,13 +275,14 @@ public class MantenimientoDao implements DaoRepository {
         }
         return listMantenimiento;
     }
+
     public List oneMantenimiento(int id) {
 
         MySqlConector conector = new MySqlConector();
         List<Mantenimiento> listMantenimiento = new ArrayList<>();
         try (Connection con = conector.connect()) {
             PreparedStatement stmt = con.prepareStatement("" +
-                    "SELECT V.Imagen, M.*, C.nombre, C.apellido1, C.apellido2, P.nombre as nombreP from Cliente C  JOIN Vehiculo V on V.id_cliente = C.idcliente JOIN MANTENIMIENTO M on V.noSerie = M.noSerie JOIN PAQUETE P " +
+                    "SELECT V.Imagen, M.*, C.Nombre, C.Apellido1, C.Apellido2, P.Nombre as nombreP from Cliente C  JOIN Vehiculo V on V.id_cliente = C.idcliente JOIN Mantenimiento M on V.NoSerie = M.noSerie JOIN Paquete P " +
                     " on P.Id_paquete = M.id_paquete  where M.id_mantenimiento = ?");
 
             stmt.setInt(1, id);
@@ -290,11 +291,11 @@ public class MantenimientoDao implements DaoRepository {
             while (res.next()) {
                 Mantenimiento man = new Mantenimiento();
                 man.setNoSerie(res.getString("NoSerie"));
-                man.setFechaInicio(res.getString("fechaInicio"));
+                man.setFechaInicio(res.getString("FechaInicio"));
                 man.setNombrePaquete(res.getString("nombreP"));
-                man.setNombreCliente(res.getString("C.nombre"));
+                man.setNombreCliente(res.getString("C.Nombre"));
                 man.setDescripcion(res.getString("descripcion"));
-                man.setCategoria(res.getString("categoria"));
+                man.setCategoria(res.getString("Categoria"));
                 man.setId_mecanico(res.getInt("id_empleado"));
                 man.setId_mantenimiento(res.getInt("id_mantenimiento"));
                 listMantenimiento.add(man);
@@ -309,7 +310,7 @@ public class MantenimientoDao implements DaoRepository {
     public void agregarArticulosAMantenimiento(int idMantenimiento, String[] nombresArticulos) {
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO EXTRA (id_mantenimiento, id_producto) VALUES (?,?)");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO Extra (id_mantenimiento, id_producto) VALUES (?,?)");
 
             for (String nombreArticulo : nombresArticulos) {
 
@@ -329,7 +330,7 @@ public class MantenimientoDao implements DaoRepository {
         MySqlConector conector = new MySqlConector();
         int nombreA = -1;
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT id_producto FROM PRODUCTO where nombre =?");
+            PreparedStatement stmt = con.prepareStatement("SELECT id_producto FROM Producto where Nombre =?");
             stmt.setString(1, nombre.trim());
             ResultSet res = stmt.executeQuery();
             if (res.next()) {
@@ -348,16 +349,16 @@ public class MantenimientoDao implements DaoRepository {
         List<Articulo> detalles = new ArrayList<>();
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT P.* FROM Producto P JOIN EXTRA E on E.id_producto =" +
-                    " P.id_producto JOIN mantenimiento M on M.id_mantenimiento = E. id_mantenimiento where M.id_mantenimiento = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT P.* FROM Producto P JOIN Extra E on E.id_producto =" +
+                    " P.id_producto JOIN Mantenimiento M on M.id_mantenimiento = E. id_mantenimiento where M.id_mantenimiento = ?");
             stmt.setInt(1, id_mantenimiento);
             ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
                 Articulo art = new Articulo();
-                art.setNombre(res.getString("nombre"));
-                art.setCategoria(res.getString("categoria"));
-                art.setCosto(res.getFloat("costo"));
+                art.setNombre(res.getString("Nombre"));
+                art.setCategoria(res.getString("Categoria"));
+                art.setCosto(res.getFloat("Costo"));
                 detalles.add(art);
             }
         } catch (SQLException e) {
@@ -370,7 +371,7 @@ public class MantenimientoDao implements DaoRepository {
     public void actualizarProceso(int id_manetenimiento, int porcentaje) {
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE MANTENIMIENTO SET proceso = ? WHERE id_mantenimiento = ?");
+            PreparedStatement stmt = con.prepareStatement("UPDATE Mantenimiento SET Proceso = ? WHERE id_mantenimiento = ?");
             stmt.setInt(1, porcentaje);
             stmt.setInt(2, id_manetenimiento);
             stmt.executeUpdate();
@@ -384,12 +385,12 @@ public class MantenimientoDao implements DaoRepository {
         int porcentaje = -1;
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT proceso FROM MANTENIMIENTO WHERE id_mantenimiento = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT Proceso FROM Mantenimiento WHERE id_mantenimiento = ?");
             stmt.setInt(1, id_manetenimiento);
             ResultSet resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
-                porcentaje = resultSet.getInt("proceso");
+                porcentaje = resultSet.getInt("Proceso");
             }
 
         } catch (SQLException e) {
@@ -401,12 +402,12 @@ public class MantenimientoDao implements DaoRepository {
         String correo ="";
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT C.correo FROM cliente C join vehiculo V on V.id_cliente = C.idcliente JOIN mantenimiento M on M.NoSerie = V.NoSerie where M.id_mantenimiento = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT C.Correo FROM Cliente C join Vehiculo V on V.id_cliente = C.idcliente JOIN Mantenimiento M on M.NoSerie = V.NoSerie where M.id_mantenimiento = ?");
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
 
             if (resultSet.next()) {
-                correo = resultSet.getString("C.correo");
+                correo = resultSet.getString("C.Correo");
             }
 
         } catch (SQLException e) {
@@ -419,13 +420,13 @@ public class MantenimientoDao implements DaoRepository {
         List<ProductoExtra> listaProductosExtra = new ArrayList<>();
         MySqlConector conector = new MySqlConector();
         try (Connection con = conector.connect()) {
-            PreparedStatement stmt = con.prepareStatement("SELECT P.nombre, P.costo FROM Producto P JOIN extra E ON P.id_producto = E.id_producto WHERE E.id_mantenimiento = ?");
+            PreparedStatement stmt = con.prepareStatement("SELECT P.Nombre, P.Costo FROM Producto P JOIN Extra E ON P.id_producto = E.id_producto WHERE E.id_mantenimiento = ?");
             stmt.setInt(1, idMantenimiento);
             ResultSet res = stmt.executeQuery();
             while (res.next()) {
                 ProductoExtra productoExtra = new ProductoExtra();
-                productoExtra.setNombre(res.getString("P.nombre"));
-                productoExtra.setPrecio(res.getDouble("P.costo"));
+                productoExtra.setNombre(res.getString("P.Nombre"));
+                productoExtra.setPrecio(res.getDouble("P.Costo"));
                 listaProductosExtra.add(productoExtra);
             }
         } catch (SQLException e) {
@@ -436,5 +437,154 @@ public class MantenimientoDao implements DaoRepository {
     }
 
 
+    public List MostrarMantenimientosTotales() {
+        MySqlConector conector = new MySqlConector();
+        List<Mantenimiento> listMantenimientosTotales = new ArrayList<>();
+        try (Connection con = conector.connect()) {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT\n" +
+                            "    M.id_empleado,\n" +
+                            "    P.Costo,\n" +
+                            "    V.Imagen,\n" +
+                            "    V.Marca,\n" +
+                            "    M.id_mantenimiento,\n" +
+                            "    M.Proceso,\n" +
+                            "    M.Categoria,\n" +
+                            "    M.Descripcion,\n" +
+                            "    V.id_cliente,\n" +
+                            "    M.NoSerie,\n" +
+                            "    M.FechaInicio,\n" +
+                            "    C.Nombre,\n" +
+                            "    C.Apellido1,\n" +
+                            "    C.Apellido2,\n" +
+                            "    P.Nombre AS nombre_paquete,\n" +
+                            "    COUNT(E.id_producto) AS cantidad_productos_extra\n" +
+                            "FROM\n" +
+                            "    Cliente C\n" +
+                            "JOIN\n" +
+                            "    Vehiculo V ON V.id_cliente = C.idcliente\n" +
+                            "JOIN\n" +
+                            "    Mantenimiento M ON V.NoSerie = M.NoSerie\n" +
+                            "JOIN\n" +
+                            "    Paquete P ON P.id_paquete = M.id_paquete\n" +
+                            "LEFT JOIN\n" +
+                            "    Extra E ON M.id_mantenimiento = E.id_mantenimiento\n" +
+                            "GROUP BY\n" +
+                            "    M.id_empleado,\n" +
+                            "    V.Imagen,\n" +
+                            "    V.Marca,\n" +
+                            "    M.id_mantenimiento,\n" +
+                            "    M.Proceso,\n" +
+                            "    M.Categoria,\n" +
+                            "    M.Descripcion,\n" +
+                            "    V.id_cliente,\n" +
+                            "    M.NoSerie,\n" +
+                            "    M.FechaInicio,\n" +
+                            "    C.Nombre,\n" +
+                            "    C.Apellido1,\n" +
+                            "    C.Apellido2,\n" +
+                            "    P.Nombre;");
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                Mantenimiento man = new Mantenimiento();
+                man.setNoSerie(res.getString("M.NoSerie"));
+                man.setFechaInicio(res.getString("M.fechaInicio"));
+                man.setNombrePaquete(res.getString("nombre_paquete"));
+                man.setNombreCliente(res.getString("C.nombre"));
+                man.setDescripcion(res.getString("M.descripcion"));
+                man.setCategoria(res.getString("M.categoria"));
+                man.setId_mecanico(res.getInt("M.id_empleado"));
+                man.setId_mantenimiento(res.getInt("M.id_mantenimiento"));
+                man.setProceso(res.getInt("M.proceso"));
+                man.setApellido1(res.getString("C.apellido1"));
+                man.setApellido2(res.getString("C.apellido2"));
+                man.setMarca(res.getString("V.marca"));
+                man.setExtras(res.getInt("cantidad_productos_extra"));
+                listMantenimientosTotales.add(man);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listMantenimientosTotales;
+    }
+
+    public List MostrarMantenimientoCliente(int id) {
+        MySqlConector conector = new MySqlConector();
+        List<Mantenimiento> listMantenimientoCliente = new ArrayList<>();
+        try (Connection con = conector.connect()) {
+            PreparedStatement stmt = con.prepareStatement(
+                    "SELECT\n" +
+                            "    C.idcliente,\n" +
+                            "    P.Costo,\n" +
+                            "    V.Imagen,\n" +
+                            "    V.Marca,\n" +
+                            "    M.id_mantenimiento,\n" +
+                            "    M.Proceso,\n" +
+                            "    M.Categoria,\n" +
+                            "    M.Descripcion,\n" +
+                            "    V.id_cliente,\n" +
+                            "    M.NoSerie,\n" +
+                            "    M.FechaInicio,\n" +
+                            "    C.Nombre,\n" +
+                            "    C.Apellido1,\n" +
+                            "    C.Apellido2,\n" +
+                            "    P.Nombre AS nombre_paquete,\n" +
+                            "    COUNT(E.id_producto) AS cantidad_productos_extra\n" +
+                            "FROM\n" +
+                            "    Cliente C\n" +
+                            "JOIN\n" +
+                            "    Vehiculo V ON V.id_cliente = C.idcliente\n" +
+                            "JOIN\n" +
+                            "    Mantenimiento M ON V.NoSerie = M.NoSerie\n" +
+                            "JOIN\n" +
+                            "    Paquete P ON P.id_paquete = M.id_paquete\n" +
+                            "LEFT JOIN\n" +
+                            "    Extra E ON M.id_mantenimiento = E.id_mantenimiento\n" +
+                            "WHERE\n" +
+                            "    C.idcliente = ?\n" +
+                            "GROUP BY\n" +
+                            "    C.idcliente,\n" +
+                            "    P.Costo,\n" +
+                            "    V.Imagen,\n" +
+                            "    V.Marca,\n" +
+                            "    M.id_mantenimiento,\n" +
+                            "    M.Proceso,\n" +
+                            "    M.Categoria,\n" +
+                            "    M.Descripcion,\n" +
+                            "    V.id_cliente,\n" +
+                            "    M.NoSerie,\n" +
+                            "    M.FechaInicio,\n" +
+                            "    C.Nombre,\n" +
+                            "    C.Apellido1,\n" +
+                            "    C.Apellido2,\n" +
+                            "    P.Nombre");
+            stmt.setInt(1, id);
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                Mantenimiento man = new Mantenimiento();
+                man.setNoSerie(res.getString("M.NoSerie"));
+                man.setFechaInicio(res.getString("M.FechaInicio"));
+                man.setNombrePaquete(res.getString("nombre_paquete"));
+                man.setNombreCliente(res.getString("C.Nombre"));
+                man.setDescripcion(res.getString("M.Descripcion"));
+                man.setCategoria(res.getString("M.Categoria"));
+                man.setId_mecanico(res.getInt("V.id_cliente"));
+                man.setId_mantenimiento(res.getInt("M.id_mantenimiento"));
+                man.setProceso(res.getInt("M.Proceso"));
+                man.setApellido1(res.getString("C.Apellido1"));
+                man.setApellido2(res.getString("C.Apellido2"));
+                man.setMarca(res.getString("V.Marca"));
+                man.setExtras(res.getInt("cantidad_productos_extra"));
+                man.setCostopaquete(res.getInt("P.Costo"));
+                listMantenimientoCliente.add(man);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listMantenimientoCliente;
+    }
+
 
 }
+
+
